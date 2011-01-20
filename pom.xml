@@ -1,0 +1,29 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>com.googlecode.aaw</groupId>
+	<artifactId>aaw-xml</artifactId>
+	<version>0.0.1-SNAPSHOT</version>
+	<name>xml</name>
+	<description>AAW's lightweight XML toolkit</description>
+	<url>http://aaw.googlecode.com/</url>
+	<licenses>
+		<license>
+			<name>GNU Lesser General Public License</name>
+			<url>http://www.gnu.org/licences/lgpl-3.0.txt</url>
+			<distribution>repo</distribution>
+		</license>
+	</licenses>
+	<scm>
+		<url>http://code.google.com/p/aaw/source/browse/?repo=xml</url>
+		<connection>scm:hg:https://xml.aaw.googlecode.com/hg/ aaw-${project.name}</connection>
+	</scm>
+	<developers>
+		<developer>
+			<id>aaw</id>
+			<name>AAW Development Team</name>
+			<email>aaw@googlecode.com</email>
+			<organization>agents@work</organization>
+		</developer>
+	</developers>
+</project>
