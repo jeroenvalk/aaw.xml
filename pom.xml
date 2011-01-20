@@ -1,11 +1,17 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
-	<groupId>com.googlecode.aaw</groupId>
-	<artifactId>aaw-xml</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
 	<name>xml</name>
 	<description>AAW's lightweight XML toolkit</description>
+	<!-- DO NOT EDIT BELOW THIS LINE -->
+	<parent>
+		<groupId>org.sonatype.oss</groupId>
+		<artifactId>oss-parent</artifactId>
+		<version>6</version>
+	</parent>
+	<groupId>com.googlecode.aaw</groupId>
+	<artifactId>aaw-${project.name}</artifactId>
+	<version>0.0.1-SNAPSHOT</version>
 	<url>http://aaw.googlecode.com/</url>
 	<licenses>
 		<license>
@@ -15,8 +21,9 @@
 		</license>
 	</licenses>
 	<scm>
-		<url>http://code.google.com/p/aaw/source/browse/?repo=xml</url>
 		<connection>scm:hg:https://xml.aaw.googlecode.com/hg/ aaw-${project.name}</connection>
+		<developerConnection>scm:hg:https://xml.aaw.googlecode.com/hg/ aaw-${project.name}</developerConnection>
+		<url>http://code.google.com/p/aaw/source/browse/?repo=${project.name}</url>
 	</scm>
 	<developers>
 		<developer>
