@@ -1,16 +1,25 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-	<modelVersion>4.0.0</modelVersion>
-	<name>xml</name>
+	<artifactId>aaw-xml</artifactId>
+	<name>xml</name><!-- must be artifactId minus 'aaw-' for googlecode -->
 	<description>AAW's lightweight XML toolkit</description>
+	<dependencies>
+		<dependency>
+			<groupId>com.googlecode.aaw</groupId>
+			<artifactId>aaw-bootstrap</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+			<type>jar</type>
+			<scope>compile</scope>
+		</dependency>
+	</dependencies>
 	<!-- DO NOT EDIT BELOW THIS LINE -->
 	<parent>
 		<groupId>org.sonatype.oss</groupId>
 		<artifactId>oss-parent</artifactId>
 		<version>6</version>
 	</parent>
+	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.googlecode.aaw</groupId>
-	<artifactId>aaw-${project.name}</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<url>http://aaw.googlecode.com/</url>
 	<licenses>
@@ -21,8 +30,8 @@
 		</license>
 	</licenses>
 	<scm>
-		<connection>scm:hg:https://xml.aaw.googlecode.com/hg/ aaw-${project.name}</connection>
-		<developerConnection>scm:hg:https://xml.aaw.googlecode.com/hg/ aaw-${project.name}</developerConnection>
+		<connection>scm:hg:https://${project.name}.aaw.googlecode.com/hg/ aaw-${project.name}</connection>
+		<developerConnection>scm:hg:https://${project.name}.aaw.googlecode.com/hg/ aaw-${project.name}</developerConnection>
 		<url>http://code.google.com/p/aaw/source/browse/?repo=${project.name}</url>
 	</scm>
 	<developers>
