@@ -4,7 +4,6 @@ import java.util.AbstractMap;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
-import java.util.Map.Entry;
 
 import nl.agentsatwork.attribute.Attribute;
 import nl.agentsatwork.collection.AbstractImmutableSet;
