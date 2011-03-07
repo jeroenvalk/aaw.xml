@@ -2,12 +2,12 @@ package nl.agentsatwork.attribute;
 
 import nl.agentsatwork.attributes.Superior;
 
-public abstract class AbstractImmutableAttribute implements Attribute {
+abstract public class ImmutableAttribute implements Attribute {
 
 	private Superior superior;
 	final private String key;
 	
-	public AbstractImmutableAttribute(Superior superior, String key) {
+	public ImmutableAttribute(Superior superior, String key) {
 		this.superior = superior;
 		this.key = key;
 	}
@@ -39,5 +39,16 @@ public abstract class AbstractImmutableAttribute implements Attribute {
 	public String setValue(String value) {
 		throw new UnsupportedOperationException();
 	}
+
+	public String getValue() {
+		String result = superior.valueOf(key);
+		if (result == null) {
+			return defaultValue();
+		} else {
+			return result;
+		}
+	}
+
+	abstract protected String defaultValue();
 
 }

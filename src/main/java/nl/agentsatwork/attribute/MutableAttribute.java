@@ -2,11 +2,11 @@ package nl.agentsatwork.attribute;
 
 import nl.agentsatwork.attributes.Superior;
 
-abstract public class AbstractAttribute extends AbstractImmutableAttribute {
+abstract public class MutableAttribute extends ImmutableAttribute {
 
 	protected String value = null;
 
-	public AbstractAttribute(Superior superior, String key) {
+	public MutableAttribute(Superior superior, String key) {
 		super(superior, key);
 	}
 
@@ -15,5 +15,13 @@ abstract public class AbstractAttribute extends AbstractImmutableAttribute {
 		this.value = value;
 		return result;
 	}
-	
+
+	public String getValue() {
+		if (value == null) {
+			return super.getValue();
+		} else {
+			return value;
+		}		
+	}
+
 }
