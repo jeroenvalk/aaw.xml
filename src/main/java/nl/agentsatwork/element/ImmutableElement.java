@@ -11,11 +11,17 @@ public class ImmutableElement extends AbstractSuperior implements Element {
 
 	final private String tagname;
 	final private Attributes attr;
+	final private Superior descendants;
 	
-	public ImmutableElement(Superior superior, String tagname, Attributes attr) {
+	public ImmutableElement(Superior superior, String tagname, Attributes attr, Elements[] descendant) {
 		this.superior = superior;
 		this.tagname = tagname;
 		this.attr = attr;
+		if (descendant == null) {
+			descendants = null;
+		} else {
+			
+		}
 	}
 		
 	public String getTagName() {
