@@ -8,7 +8,7 @@ abstract public class ImmutableAttribute implements Attribute {
 	final private String key;
 	
 	public ImmutableAttribute(Superior superior, String key) {
-		this.superior = superior;
+		setSuperior(superior);
 		this.key = key;
 	}
 	
