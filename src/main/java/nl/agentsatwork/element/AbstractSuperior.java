@@ -1,19 +1,20 @@
 package nl.agentsatwork.element;
 
-import java.util.HashSet;
-import java.util.Iterator;
+import java.util.AbstractList;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Set;
 
 import nl.agentsatwork.attribute.Attribute;
 import nl.agentsatwork.attributes.Attributes;
 import nl.agentsatwork.attributes.ImmutableAttributes;
-import nl.agentsatwork.collection.AbstractImmutableSet;
+import nl.agentsatwork.collection.AbstractTuple;
+import nl.agentsatwork.collection.Tuple;
 
 public class AbstractSuperior implements Superior {
 
 	final protected Attributes attr;
 	private AbstractSuperior superior = null;
-	private Set<String> tagnames = new HashSet<String>();
 
 	public AbstractSuperior(Attribute[] attribute) {
 		this.attr = newAttr(attribute);
@@ -23,6 +24,32 @@ public class AbstractSuperior implements Superior {
 		return null;
 	}
 
+	protected Element parent() {
+		return (Element) superior;
+	}
+	
+	protected Tuple<Element> ancestors() {
+		final List<Element> result = new ArrayList<Element>();
+		AbstractSuperior current = this;
+		while (current != null) {
+			result.add((Element) current);
+			current = current.superior;
+		}
+		return new AbstractTuple<Element>() {
+
+			@Override
+			public Element get(int index) {
+				return result.get(index);
+			}
+
+			@Override
+			public int size() {
+				return result.size();
+			}
+			
+		};
+	}
+	
 	public Set<String> attributes() {
 		return ((ImmutableAttributes) attr).attributes();
 	}
@@ -42,39 +69,6 @@ public class AbstractSuperior implements Superior {
 	public String valueOf(String name) {
 		// TODO Auto-generated method stub
 		return null;
-	}
-
-	public Set<String> tagnames() {
-		return new AbstractImmutableSet<String>() {
-
-			public int size() {
-				return tagnames.size();
-			}
-
-			public boolean contains(Object o) {
-				return tagnames.contains(o);
-			}
-
-			public Iterator<String> iterator() {
-				final Iterator<String> it = tagnames.iterator();
-				return new Iterator<String>() {
-
-					public boolean hasNext() {
-						return it.hasNext();
-					}
-
-					public String next() {
-						return it.next();
-					}
-
-					public void remove() {
-						throw new UnsupportedOperationException();
-					}
-					
-				};
-			}
-			
-		};
 	}
 
 	public boolean hasElement(Element element) {
