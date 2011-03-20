@@ -5,6 +5,8 @@ import nl.agentsatwork.elements.Elements;
 
 public interface Element extends Attributes {
 
-	Elements xpath(String path);
+	Iterable<Element> ancestors();
+	
+	Elements xpath(Element path);
 	
 }
