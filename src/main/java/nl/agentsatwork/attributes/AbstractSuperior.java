@@ -11,9 +11,8 @@ import nl.agentsatwork.collection.AbstractIterator;
 
 abstract public class AbstractSuperior implements Superior {
 
-	protected Superior superior = this;
 	final private Map<String, Attribute> attr = new HashMap<String, Attribute>();
-
+	
 	final public Set<String> attributes() {
 		return new AbstractImmutableSet<String>() {
 
@@ -75,7 +74,5 @@ abstract public class AbstractSuperior implements Superior {
 			}
 		}
 	}
-
-	abstract public String valueOf(String name);
 
 }

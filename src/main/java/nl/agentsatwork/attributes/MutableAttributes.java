@@ -34,9 +34,9 @@ public class MutableAttributes extends ImmutableAttributes {
 	}
 
 	public Map<String, String> attr() {
+		final Superior superior = this;
 		return new AbstractMap<String, String>() {
 
-			@Override
 			public Set<Entry<String, String>> entrySet() {
 				return new AbstractSet<Entry<String, String>>() {
 
@@ -58,7 +58,6 @@ public class MutableAttributes extends ImmutableAttributes {
 								return it.hasNext();
 							}
 
-							@Override
 							public Entry<String, String> getNext() {
 								String key = it.next();
 								return superior.attribute(key);

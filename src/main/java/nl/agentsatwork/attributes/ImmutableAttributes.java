@@ -42,9 +42,9 @@ public class ImmutableAttributes extends AbstractSuperior implements Attributes 
 	}
 
 	public Map<String, String> attr() {
+		final Superior superior = this;
 		return new AbstractMap<String, String>() {
 
-			@Override
 			public Set<Entry<String, String>> entrySet() {
 				return new AbstractImmutableSet<Entry<String, String>>() {
 
@@ -66,7 +66,6 @@ public class ImmutableAttributes extends AbstractSuperior implements Attributes 
 								return it.hasNext();
 							}
 
-							@Override
 							public Entry<String, String> getNext() {
 								String key = it.next();
 								return superior.attribute(key);
@@ -85,7 +84,6 @@ public class ImmutableAttributes extends AbstractSuperior implements Attributes 
 		};
 	}
 
-	@Override
 	public String valueOf(String name) {
 		return null;
 	}
