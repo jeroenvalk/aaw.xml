@@ -1,6 +1,6 @@
-package nl.agentsatwork.element;
+package nl.agentsatwork.elements;
 
-import nl.agentsatwork.elements.Elements;
+import nl.agentsatwork.element.Element;
 
 public interface Superior extends nl.agentsatwork.attributes.Superior {
 

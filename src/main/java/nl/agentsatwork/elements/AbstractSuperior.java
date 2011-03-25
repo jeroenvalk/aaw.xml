@@ -1,4 +1,4 @@
-package nl.agentsatwork.element;
+package nl.agentsatwork.elements;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -11,7 +11,7 @@ import nl.agentsatwork.attributes.Attributes;
 import nl.agentsatwork.attributes.ImmutableAttributes;
 import nl.agentsatwork.collection.AbstractTuple;
 import nl.agentsatwork.collection.Tuple;
-import nl.agentsatwork.elements.Elements;
+import nl.agentsatwork.element.Element;
 
 public class AbstractSuperior implements Superior {
 

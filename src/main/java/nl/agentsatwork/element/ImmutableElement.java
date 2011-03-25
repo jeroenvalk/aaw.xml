@@ -10,7 +10,9 @@ import nl.agentsatwork.attributes.ImmutableAttributes;
 import nl.agentsatwork.attributes.Attributes;
 import nl.agentsatwork.collection.AbstractTuple;
 import nl.agentsatwork.collection.Tuple;
+import nl.agentsatwork.elements.AbstractSuperior;
 import nl.agentsatwork.elements.Elements;
+import nl.agentsatwork.elements.Superior;
 
 public class ImmutableElement extends AbstractSuperior implements Element {
 
