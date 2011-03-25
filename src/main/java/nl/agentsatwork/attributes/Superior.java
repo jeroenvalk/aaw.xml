@@ -3,6 +3,7 @@ package nl.agentsatwork.attributes;
 import java.util.Set;
 
 import nl.agentsatwork.attribute.Attribute;
+import nl.agentsatwork.elements.Elements;
 
 public interface Superior {
 

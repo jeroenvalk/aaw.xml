@@ -14,16 +14,8 @@ import nl.agentsatwork.elements.Elements;
 
 public class ImmutableElement extends AbstractSuperior implements Element {
 
-	final private String tagname;
-
-	public ImmutableElement(String tagname, Attribute[] attribute, Elements[] elements) {
-		super(attribute);
-		this.tagname = tagname;
-		if (elements != null) {
-			for (int i=0; i<elements.length; ++i) {
-				this.r
-			}
-		}
+	public ImmutableElement(Elements siblings, Attribute[] attribute, Elements[] elements) {
+		super(attribute, elements);
 	}
 
 	protected Attributes newAttr(Attribute[] attribute) {
@@ -35,43 +27,27 @@ public class ImmutableElement extends AbstractSuperior implements Element {
 		};
 	}
 
+	public boolean hasTagName(String tagname) {
+		return super.siblings().getTagName().equals(tagname);
+	}
+
 	public String getTagName() {
-		return tagname;
+		return super.siblings().getTagName();
 	}
 
 	public boolean hasAttribute(String name) {
-		return attr.hasAttribute(name);
+		return super.attribute(name) != null;
 	}
 
 	public String get(String name) {
-		return attr.get(name);
+		return super.attribute(name).getValue();
 	}
 
 	public void set(String name, String value) {
-		attr.set(name, value);
+		throw new UnsupportedOperationException();
 	}
 
 	public Map<String, String> attr() {
-		return attr.attr();
-	}
-
-	public Iterator<String> iterator() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	public Elements siblings() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	public boolean hasTagName(String tagname) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	public Elements getElementsByTagName(String tagname) {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
@@ -171,7 +147,4 @@ public class ImmutableElement extends AbstractSuperior implements Element {
 		return false;
 	}
 
-	private void simplify(Element path) {
-
-	}
 }

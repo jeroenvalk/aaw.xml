@@ -4,16 +4,12 @@ import nl.agentsatwork.attributes.Attributes;
 import nl.agentsatwork.collection.Tuple;
 import nl.agentsatwork.elements.Elements;
 
-public interface Element extends Attributes, Iterable<String> {
-
-	Elements siblings();
+public interface Element extends Attributes {
 
 	boolean hasTagName(String tagname);
 	
-	Elements getElementsByTagName(String tagname);
-	
+	String getTagName();
+
 	Tuple<Element> xpath(String path);
-	
-	Tuple<Element> xpath(Element path);
 	
 }

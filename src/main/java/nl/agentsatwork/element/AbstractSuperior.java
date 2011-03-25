@@ -1,8 +1,9 @@
 package nl.agentsatwork.element;
 
-import java.util.AbstractList;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import nl.agentsatwork.attribute.Attribute;
@@ -10,13 +11,16 @@ import nl.agentsatwork.attributes.Attributes;
 import nl.agentsatwork.attributes.ImmutableAttributes;
 import nl.agentsatwork.collection.AbstractTuple;
 import nl.agentsatwork.collection.Tuple;
+import nl.agentsatwork.elements.Elements;
 
 public class AbstractSuperior implements Superior {
 
-	final protected Attributes attr;
+	final private Attributes attr;
+	final private Map<String,Elements> elements = new HashMap<String,Elements>();
+	
 	private AbstractSuperior superior = null;
 
-	public AbstractSuperior(Attribute[] attribute) {
+	public AbstractSuperior(Attribute[] attribute, Elements[] elements) {
 		this.attr = newAttr(attribute);
 	}
 
@@ -71,14 +75,6 @@ public class AbstractSuperior implements Superior {
 		return null;
 	}
 
-	public boolean hasElement(Element element) {
-		if (element instanceof AbstractSuperior) {
-			return ((AbstractSuperior) element).superior == this;
-		} else {
-			return false;
-		}
-	}
-
 	public boolean register(Element element) {
 		if (element instanceof AbstractSuperior) {
 			if (element == this) {
@@ -105,6 +101,15 @@ public class AbstractSuperior implements Superior {
 		} else {
 			return false;
 		}
+	}
+
+	public Elements elements(String tagname) {
+		return elements.get(tagname);
+	}
+
+	public Elements siblings() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }
