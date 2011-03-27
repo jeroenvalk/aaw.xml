@@ -1,7 +1,10 @@
 package nl.agentsatwork.xpath;
 
+import nl.agentsatwork.antlr.XPath;
 import nl.agentsatwork.antlr.XPathLexer;
 
+import org.antlr.runtime.ANTLRStringStream;
+import org.antlr.runtime.CommonTokenStream;
 import org.antlr.runtime.RecognitionException;
 import org.antlr.runtime.tree.Tree;
 
@@ -17,6 +20,9 @@ public class AbstractXPath {
 //	}
 
 	protected Tree parse(String xpath) throws RecognitionException {
-		return null;
+		lexer.setCharStream(new ANTLRStringStream(xpath));
+		XPath parser = new XPath(new CommonTokenStream(lexer));
+		XPath.main_return result = parser.main();
+		return (Tree) result.getTree();
 	}
 }
