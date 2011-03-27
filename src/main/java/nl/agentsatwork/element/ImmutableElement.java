@@ -1,64 +1,45 @@
 package nl.agentsatwork.element;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
+import org.antlr.runtime.RecognitionException;
+import org.antlr.runtime.tree.Tree;
+
 import nl.agentsatwork.attribute.Attribute;
+import nl.agentsatwork.attributes.AbstractSuperior;
 import nl.agentsatwork.attributes.ImmutableAttributes;
 import nl.agentsatwork.attributes.Attributes;
 import nl.agentsatwork.collection.AbstractTuple;
 import nl.agentsatwork.collection.Tuple;
-import nl.agentsatwork.elements.AbstractSuperior;
 import nl.agentsatwork.elements.Elements;
 import nl.agentsatwork.elements.Superior;
 
-public class ImmutableElement extends AbstractSuperior implements Element {
+public class ImmutableElement extends ImmutableAttributes implements Element {
 
-	public ImmutableElement(Elements siblings, Attribute[] attribute, Elements[] elements) {
-		super(attribute, elements);
-	}
-
-	protected Attributes newAttr(Attribute[] attribute) {
-		final Superior self = (Superior) this;
-		return new ImmutableAttributes(attribute) {
-			public String valueOf(String name) {
-				return self.valueOf(name);
-			}
-		};
+	private Superior superior = null;
+	final Map<String,Elements> elements = new HashMap<String,Elements>();
+	
+	public ImmutableElement(Attribute[] attribute, Elements[] elements) {
+		super(attribute);
 	}
 
 	public boolean hasTagName(String tagname) {
-		return super.siblings().getTagName().equals(tagname);
+		return getTagName().equals(tagname);
 	}
 
 	public String getTagName() {
-		return super.siblings().getTagName();
+		return superior.siblings().getTagName();
 	}
 
-	public boolean hasAttribute(String name) {
-		return super.attribute(name) != null;
+	public Tuple<Element> xpath(String path) throws RecognitionException {
+			return null;
 	}
-
-	public String get(String name) {
-		return super.attribute(name).getValue();
-	}
-
-	public void set(String name, String value) {
-		throw new UnsupportedOperationException();
-	}
-
-	public Map<String, String> attr() {
-		return null;
-	}
-
-	public Tuple<Element> xpath(String path) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	public Tuple<Element> xpath(Element path) {
+/*
+	public Tuple<Element> xpath(Tree path) {
 		if (!path.hasTagName("xpath")) {
 			throw new IllegalArgumentException("protocol error");
 		}
@@ -148,5 +129,5 @@ public class ImmutableElement extends AbstractSuperior implements Element {
 	private boolean evaluate(Element predicate) {
 		return false;
 	}
-
+*/
 }

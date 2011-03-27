@@ -8,8 +8,9 @@ import java.util.Set;
 import nl.agentsatwork.attribute.Attribute;
 import nl.agentsatwork.collection.AbstractImmutableSet;
 import nl.agentsatwork.collection.AbstractIterator;
+import nl.agentsatwork.xpath.AbstractXPath;
 
-abstract public class AbstractSuperior implements Superior {
+abstract public class AbstractSuperior extends AbstractXPath implements Superior {
 
 	final private Map<String, Attribute> attr = new HashMap<String, Attribute>();
 	

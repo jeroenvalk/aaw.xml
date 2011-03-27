@@ -12,9 +12,9 @@ import nl.agentsatwork.attributes.ImmutableAttributes;
 import nl.agentsatwork.collection.AbstractTuple;
 import nl.agentsatwork.collection.Tuple;
 import nl.agentsatwork.element.Element;
+import nl.agentsatwork.xpath.AbstractXPath;
 
-public class AbstractSuperior implements Superior {
-
+public class AbstractSuperior extends AbstractXPath implements Superior {
 	final private Attributes attr;
 	final private Map<String,Elements> elements = new HashMap<String,Elements>();
 	

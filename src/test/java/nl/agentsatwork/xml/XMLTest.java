@@ -32,6 +32,7 @@ public class XMLTest {
 		example = new Example();
 	}
 
+	/*
 	public void testXML() {
 		Elements example = new XML<Example,Example>() {
 
@@ -59,4 +60,5 @@ public class XMLTest {
 			
 		};
 	}
+	*/
 }
