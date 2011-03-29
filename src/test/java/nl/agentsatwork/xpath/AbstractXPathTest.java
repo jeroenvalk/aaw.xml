@@ -21,7 +21,7 @@ public class AbstractXPathTest {
 	public void testParse() {
 		Tree tree = null;
 		try {
-			tree = xpath.parse("child::hello[@test='hallo'][@gg=0]/world/and/comment()");
+			tree = xpath.parse("//child::hello[@test='hallo'][@gg=0]/world//and/comment()");
 		} catch (RecognitionException e) {
 			logger.error(null, e);
 			fail("RecognitionException");
@@ -29,8 +29,6 @@ public class AbstractXPathTest {
 		logger.info(tree.getType());
 		logger.info(tree.getText());
 		logger.info(tree.getChildCount());
-		logger.info(tree.getChild(7).getChildCount());
-		logger.info(tree.getChild(10).getChildCount());
 		logger.info(tree.toStringTree());
 	}
 }

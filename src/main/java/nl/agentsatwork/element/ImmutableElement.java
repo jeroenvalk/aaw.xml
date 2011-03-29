@@ -53,46 +53,39 @@ public class ImmutableElement extends ImmutableAttributes implements Element {
 	}
 
 	public Tuple<Element> xpath(Tree path) {
-		int n = path.getChildCount();
-		if (n > 0) {
-			int i = 0;
-			Tree child = path.getChild(i);
-			switch (child.getType()) {
-			case XPath.AxisName:
-				if (child.getText().equals("self")) {
-					child = path.getChild(++i);
-					assert i < n;
-					switch (child.getType()) {
-					case XPath.NodeType:
-						assert false;
-						return null;
-					case XPath.ProcessingInstruction:
-						assert false;
-						return null;
-					case XPath.COLON:
-						switch (child.getChildCount()) {
-						case 1:
-							if (!this.hasTagName(child.getChild(0).getText())) {
-								return null;
-							}
-						case 2:
-							assert false;
-							return null;
-						default:
-							assert false;
-							return null;
-						}
-					default:
-						assert false;
-						return null;
-					}
-				}
+		switch (path.getType()) {
+		case XPath.PATHSEP:
+			return superior.siblings().xpath(path);
+		case XPath.PATH:
+			assert path.getChildCount() > 0;
+			switch (path.getChild(0).getType()) {
+			case XPath.Following:
+			case XPath.FollowingSibling:
+			case XPath.Namespace:
+			case XPath.Preceding:
+			case XPath.PrecedingSibling:
+				assert false;
+				return null;
+			case XPath.Ancestor:
+			case XPath.Parent:
+				return superior.siblings().xpath(path);
+			case XPath.Child:
+			case XPath.Descendant:
+			case XPath.Attribute:
+
+			case XPath.AncestorOrSelf:
+			case XPath.DescendantOrSelf:
+			case XPath.Self:
+			default:
+				assert false;
+				return null;
+
 			}
-		} else {
+		default:
 			assert false;
 			return null;
+
 		}
-		return null;
 	}
 	/*
 	 * if (!path.hasTagName("xpath")) { throw new
