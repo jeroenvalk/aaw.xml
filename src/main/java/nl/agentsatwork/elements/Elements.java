@@ -1,9 +1,9 @@
 package nl.agentsatwork.elements;
 
-import org.antlr.runtime.tree.Tree;
-
 import nl.agentsatwork.collection.Tuple;
 import nl.agentsatwork.element.Element;
+
+import org.antlr.runtime.tree.Tree;
 
 public interface Elements extends Tuple<Element>{
 

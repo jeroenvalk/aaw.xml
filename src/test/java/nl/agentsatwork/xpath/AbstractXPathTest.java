@@ -1,6 +1,6 @@
 package nl.agentsatwork.xpath;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.fail;
 
 import org.antlr.runtime.RecognitionException;
 import org.antlr.runtime.tree.Tree;

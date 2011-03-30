@@ -1,10 +1,9 @@
 package nl.agentsatwork.element;
 
-import org.antlr.runtime.RecognitionException;
-
 import nl.agentsatwork.attributes.Attributes;
 import nl.agentsatwork.collection.Tuple;
-import nl.agentsatwork.elements.Elements;
+
+import org.antlr.runtime.RecognitionException;
 
 public interface Element extends Attributes {
 

@@ -1,23 +1,17 @@
 package nl.agentsatwork.element;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Iterator;
-import java.util.List;
 import java.util.Map;
-
-import org.antlr.runtime.RecognitionException;
-import org.antlr.runtime.tree.Tree;
 
 import nl.agentsatwork.antlr.XPath;
 import nl.agentsatwork.attribute.Attribute;
-import nl.agentsatwork.attributes.AbstractSuperior;
 import nl.agentsatwork.attributes.ImmutableAttributes;
-import nl.agentsatwork.attributes.Attributes;
-import nl.agentsatwork.collection.AbstractTuple;
 import nl.agentsatwork.collection.Tuple;
 import nl.agentsatwork.elements.Elements;
 import nl.agentsatwork.elements.Superior;
+
+import org.antlr.runtime.RecognitionException;
+import org.antlr.runtime.tree.Tree;
 
 public class ImmutableElement extends ImmutableAttributes implements Element {
 

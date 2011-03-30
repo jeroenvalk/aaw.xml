@@ -2,7 +2,6 @@ package nl.agentsatwork.xml;
 
 import java.util.Iterator;
 
-import nl.agentsatwork.element.Element;
 import nl.agentsatwork.elements.Elements;
 
 abstract public class XML<A,B> implements Tag, Elements {
