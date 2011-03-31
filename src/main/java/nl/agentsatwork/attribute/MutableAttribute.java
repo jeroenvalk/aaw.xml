@@ -1,13 +1,11 @@
 package nl.agentsatwork.attribute;
 
-import nl.agentsatwork.attributes.Superior;
-
 abstract public class MutableAttribute extends ImmutableAttribute {
 
 	protected String value = null;
 
-	public MutableAttribute(Superior superior, String key) {
-		super(superior, key);
+	public MutableAttribute(String key) {
+		super(key);
 	}
 
 	final public String setValue(String value) {

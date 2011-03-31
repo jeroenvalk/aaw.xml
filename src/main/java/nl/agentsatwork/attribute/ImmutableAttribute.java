@@ -1,39 +1,15 @@
 package nl.agentsatwork.attribute;
 
-import nl.agentsatwork.attributes.Superior;
+abstract public class ImmutableAttribute extends AbstractIndependentAttribute implements
+		Attribute {
 
-abstract public class ImmutableAttribute implements Attribute {
-
-	private Superior superior;
-	final private String key;
-	
-	public ImmutableAttribute(Superior superior, String key) {
-		setSuperior(superior);
-		this.key = key;
-	}
-	
-	final public Superior getSuperior() {
-		return superior;
+	public ImmutableAttribute(String key) {
+		super(key);
 	}
 
-	final public void setSuperior(Superior superior) {
-		if (this.superior == null) {
-			if (superior.register(this)) {
-				this.superior = superior;
-			}
-		} else {
-			if (this.superior.unregister(this)) {
-				if (superior.register(this)) {
-					this.superior = superior;
-				} else {
-					this.superior = null;
-				}
-			}
-		}
-	}
-	
 	final public String getKey() {
-		return key;
+		nl.agentsatwork.attributes.Superior superior = getSuperior();
+		return superior.name(superior.index(this));
 	}
 
 	public String setValue(String value) {
@@ -41,14 +17,7 @@ abstract public class ImmutableAttribute implements Attribute {
 	}
 
 	public String getValue() {
-		String result = superior.valueOf(key);
-		if (result == null) {
-			return defaultValue();
-		} else {
-			return result;
-		}
+		return defaultValue();
 	}
-
-	abstract protected String defaultValue();
 
 }

@@ -10,28 +10,28 @@ public class MutableAttributeTest extends ImmutableAttributeTest {
 	@Before
 	public void setUp() {
 		super.setUp();
-		attribute = new MutableAttribute(superior, "test") {
-			@Override
-			protected String defaultValue() {
+		attribute = new MutableAttribute("test") {
+			public String defaultValue() {
 				return "test";
-			}	
+			}
 		};
 	}
 
 	@Test
 	public void testSetValue() {
-		assertEquals("test", attribute.setValue("test3"));
+		assertEquals("test", ((Attribute) attribute).setValue("test3"));
+		assertEquals("test3", ((Attribute) attribute).getValue());
 	}
 
 	@Test
 	public void testGetValue() {
-		attribute.setValue("test3");
-		assertEquals("test3", attribute.getValue());
-		attribute.setValue(null);
+		((Attribute) attribute).setValue("test3");
+		assertEquals("test3", ((Attribute) attribute).getValue());
+		((Attribute) attribute).setValue(null);
 		super.testGetValue();
-		assertEquals("test2", attribute.setValue("test3"));
-		attribute.setValue(null);
-		assertEquals("test2", attribute.getValue());
+		assertEquals("test2", ((Attribute) attribute).setValue("test3"));
+		((Attribute) attribute).setValue(null);
+		assertEquals("test2", ((Attribute) attribute).getValue());
 	}
 
 }

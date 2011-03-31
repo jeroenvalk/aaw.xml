@@ -1,19 +1,19 @@
 package nl.agentsatwork.attributes;
 
-import java.util.Set;
-
-import nl.agentsatwork.attribute.Attribute;
+import nl.agentsatwork.attribute.AbstractAttribute;
 
 public interface Superior {
 
-	Set<String> attributes();
-	
-	Attribute attribute(String key);
-	
-	boolean register(Attribute attribute);
-	
-	boolean unregister(Attribute attribute);
+	int index(AbstractAttribute attribute);
 
-	String valueOf(String name);
+	int index(String name);
 	
+	String name(int index);
+	
+	AbstractAttribute attribute(int index);
+	
+	boolean register(AbstractAttribute abstractAttribute);
+	
+	boolean unregister(AbstractAttribute attribute);
+
 }

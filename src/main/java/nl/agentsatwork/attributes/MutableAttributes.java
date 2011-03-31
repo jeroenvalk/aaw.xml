@@ -19,14 +19,13 @@ public class MutableAttributes extends ImmutableAttributes {
 	public void set(String name, String value) {
 		Attribute attribute = attribute(name);
 		if (attribute == null) {
-			attribute = new MutableAttribute(this, name) {
+			attribute = new MutableAttribute(name) {
 				protected String defaultValue() {
 					return null;
 				}				
 			};
-			attribute.setValue(value);
-			if (!this.register(attribute)) {
-				throw new IllegalStateException();
+			if (!register(attribute)) {
+				assert false;
 			}
 		}
 		assert name.equals(attribute.getKey());
