@@ -32,7 +32,22 @@ final public class DefaultSuperior implements Superior {
 
 	final public boolean register(AbstractAttribute attribute) {
 		nl.agentsatwork.attributes.Superior superior = attribute.getSuperior();
-		if (superior == this) {
+		if (superior == null) {
+			if (attributes.indexOf(attribute) < 0) {
+				superior = AbstractAttribute.defaultSuperior;
+				int index = superior.index(attribute);
+				if (index < 0) {
+					return false;
+				} else {
+					String name = superior.name(index);
+					register(name,attribute);
+					attribute.setSuperior(this);
+					return true;
+				}
+			} else {
+				return true;
+			}
+		} else if (superior == this) {
 			if (attributes.indexOf(attribute) < 0) {
 				throw new IllegalStateException();
 			} else {
@@ -40,9 +55,9 @@ final public class DefaultSuperior implements Superior {
 			}
 		} else {
 			if (attributes.indexOf(attribute) < 0) {
-				String key = superior.name(superior.index(attribute));
+				String name = superior.name(superior.index(attribute));
 				if (superior.unregister(attribute)) {
-					register(key, attribute);
+					register(name, attribute);
 					attribute.setSuperior(this);
 					return true;
 				} else {

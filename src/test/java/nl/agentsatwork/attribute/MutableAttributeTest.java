@@ -29,9 +29,6 @@ public class MutableAttributeTest extends ImmutableAttributeTest {
 		assertEquals("test3", ((Attribute) attribute).getValue());
 		((Attribute) attribute).setValue(null);
 		super.testGetValue();
-		assertEquals("test2", ((Attribute) attribute).setValue("test3"));
-		((Attribute) attribute).setValue(null);
-		assertEquals("test2", ((Attribute) attribute).getValue());
 	}
 
 }

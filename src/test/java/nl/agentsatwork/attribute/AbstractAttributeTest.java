@@ -1,14 +1,17 @@
 package nl.agentsatwork.attribute;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertSame;
 import static org.junit.Assert.assertTrue;
 
+import org.apache.log4j.Logger;
 import org.junit.Before;
 import org.junit.Test;
 
 public class AbstractAttributeTest {
+	static private Logger logger = Logger.getLogger(AbstractAttributeTest.class);
 	protected AbstractAttribute attribute = null;
 
 	@Before
@@ -19,9 +22,10 @@ public class AbstractAttributeTest {
 	@Test
 	public void testAbstractAttribute() {
 		Superior superior = AbstractAttribute.defaultSuperior;
-		assertTrue(superior.index(attribute) == 0);
-		assertEquals("test", superior.name(0));
-		assertSame(attribute, superior.attribute(0));
+		int index = superior.index(attribute);
+		assertFalse(index < 0);
+		assertEquals("test", superior.name(index));
+		assertSame(attribute, superior.attribute(index));
 	}
 
 	@Test
@@ -34,12 +38,11 @@ public class AbstractAttributeTest {
 		Superior superior = new DefaultSuperior();
 		attribute.setSuperior(superior);
 
-		assertTrue(superior.index(attribute) == 0);
-		assertEquals("test", superior.name(0));
-		assertSame(attribute, superior.attribute(0));
+		int index = superior.index(attribute);
+		assertFalse(index < 0);
+		assertEquals("test", superior.name(index));
+		assertSame(attribute, superior.attribute(index));
 
-		superior = AbstractAttribute.defaultSuperior;
-		assertTrue(superior.index(attribute) == -1);
 	}
 
 }

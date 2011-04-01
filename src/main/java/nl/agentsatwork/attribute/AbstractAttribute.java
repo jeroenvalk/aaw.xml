@@ -13,7 +13,9 @@ public class AbstractAttribute {
 	}
 
 	public void setSuperior(nl.agentsatwork.attributes.Superior superior) {
-		superior.register(this);
+		if (superior != null) {
+			superior.register(this);
+		}
 	}
-	
+
 }

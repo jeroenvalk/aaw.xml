@@ -35,16 +35,18 @@ public class AbstractIndependentAttributeTest extends AbstractAttributeTest {
 		assertNull(attribute.getSuperior());
 		assertTrue(superior.index(attribute) == -1);
 
-		// test superior set by setSuperior
+		// test of null stays null
 		attribute.setSuperior(superior);
-		assertSame(superior, attribute.getSuperior());
-		assertTrue(superior.index(attribute) == 1);
+		assertNull(attribute.getSuperior());
 	}
 
 	@Test
 	public void testSetSuperior() {
 		assertSame(AbstractAttribute.defaultSuperior, attribute.getSuperior());
 		super.testSetSuperior();
+		nl.agentsatwork.attributes.Superior superior = AbstractAttribute.defaultSuperior;
+		assertTrue(superior.index(attribute) == -1);
+
 		assertNotNull(attribute.getSuperior());
 		assertNotSame(AbstractAttribute.defaultSuperior,
 				attribute.getSuperior());
@@ -105,9 +107,9 @@ public class AbstractIndependentAttributeTest extends AbstractAttributeTest {
 		};
 
 		// test if registration to superior1 fails
-		assertSame(AbstractAttribute.defaultSuperior, attribute.getSuperior());
+		assertNotSame(superior1, attribute.getSuperior());
 		attribute.setSuperior(superior1);
-		assertSame(AbstractAttribute.defaultSuperior, attribute.getSuperior());
+		assertNotSame(superior1, attribute.getSuperior());
 
 		// register to superior2
 		attribute.setSuperior(superior2);
