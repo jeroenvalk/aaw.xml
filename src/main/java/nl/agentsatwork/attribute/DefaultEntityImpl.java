@@ -3,7 +3,9 @@ package nl.agentsatwork.attribute;
 import java.util.ArrayList;
 import java.util.List;
 
-final public class DefaultEntityImpl implements DefaultEntity {
+import nl.agentsatwork.attributes.Entity;
+
+final public class DefaultEntityImpl implements Entity {
 
 	final private List<String> keys = new ArrayList<String>();
 	final private List<AbstractAttribute> attributes = new ArrayList<AbstractAttribute>();
@@ -31,15 +33,15 @@ final public class DefaultEntityImpl implements DefaultEntity {
 	}
 
 	final public boolean register(AbstractAttribute attribute) {
-		nl.agentsatwork.attributes.Entity superior = attribute.getSuperior();
-		if (superior == null) {
-			if (attributes.indexOf(attribute) < 0) {
-				superior = AbstractAttribute.defaultEntity;
-				int index = superior.index(attribute);
+		Entity entity = attribute.getSuperior();
+		if (entity == null) {
+			if (index(attribute) < 0) {
+				entity = AbstractAttribute.defaultEntity;
+				int index = entity.index(attribute);
 				if (index < 0) {
 					return false;
 				} else {
-					String name = superior.name(index);
+					String name = entity.name(index);
 					register(name,attribute);
 					attribute.setEntity(this);
 					return true;
@@ -47,16 +49,16 @@ final public class DefaultEntityImpl implements DefaultEntity {
 			} else {
 				return true;
 			}
-		} else if (superior == this) {
-			if (attributes.indexOf(attribute) < 0) {
+		} else if (entity == this) {
+			if (index(attribute) < 0) {
 				throw new IllegalStateException();
 			} else {
 				return true;
 			}
 		} else {
-			if (attributes.indexOf(attribute) < 0) {
-				String name = superior.name(superior.index(attribute));
-				if (superior.unregister(attribute)) {
+			if (index(attribute) < 0) {
+				String name = entity.name(entity.index(attribute));
+				if (entity.unregister(attribute)) {
 					register(name, attribute);
 					attribute.setEntity(this);
 					return true;
@@ -64,7 +66,7 @@ final public class DefaultEntityImpl implements DefaultEntity {
 					return false;
 				}
 			} else {
-				if (superior.unregister(attribute)) {
+				if (entity.unregister(attribute)) {
 					return true;
 				} else {
 					throw new IllegalStateException();

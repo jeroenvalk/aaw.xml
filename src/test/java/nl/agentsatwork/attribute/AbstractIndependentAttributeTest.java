@@ -51,7 +51,7 @@ public class AbstractIndependentAttributeTest extends AbstractAttributeTest {
 		assertNotSame(AbstractAttribute.defaultEntity,
 				attribute.getSuperior());
 
-		Entity superior1 = new nl.agentsatwork.attributes.Entity() {
+		Entity superior1 = new Entity() {
 
 			public int index(AbstractAttribute attribute) {
 				return 0;
@@ -76,9 +76,14 @@ public class AbstractIndependentAttributeTest extends AbstractAttributeTest {
 			public boolean unregister(AbstractAttribute attribute) {
 				return false;
 			}
+
+			public void register(String key, AbstractAttribute attribute) {
+				// TODO Auto-generated method stub
+				
+			}
 			
 		};
-		Entity superior2 = new nl.agentsatwork.attributes.Entity() {
+		Entity superior2 = new Entity() {
 
 			public int index(AbstractAttribute attribute) {
 				return 0;
@@ -102,6 +107,11 @@ public class AbstractIndependentAttributeTest extends AbstractAttributeTest {
 
 			public boolean unregister(AbstractAttribute attribute) {
 				return false;
+			}
+
+			public void register(String key, AbstractAttribute attribute) {
+				// TODO Auto-generated method stub
+				
 			}
 			
 		};

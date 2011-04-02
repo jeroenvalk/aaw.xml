@@ -1,76 +1,90 @@
 package nl.agentsatwork.attributes;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import nl.agentsatwork.attribute.AbstractAttribute;
-import nl.agentsatwork.attribute.Attribute;
+import nl.agentsatwork.elements.Superior;
 import nl.agentsatwork.xpath.AbstractXPath;
 
 public class AbstractEntity extends AbstractXPath implements Entity {
 
-	final private Map<String, Attribute> attr = new HashMap<String, Attribute>();
+	private Superior aggregate = null;
+	private AbstractAttribute[] attr = null;
 	
-	final public Attribute attribute(String key) {
-		return attr.get(key);
-	}
-
-	final public boolean register(Attribute attribute) {
-		String key = attribute.getKey();
-		Attribute org = attr.put(key, attribute);
-		if (org == null) {
-			return true;
-		} else {
-			assert key.equals(org.getKey());
-			attr.put(key, org);
-			return false;
+	final public int index(AbstractAttribute attribute) {
+		for (int i =0; i<attr.length; ++i) {
+			if (attr[i] == attribute) {
+				return i;
+			}
 		}
+		return -1;
 	}
 
-	final public boolean unregister(Attribute attribute) {
-		String key = attribute.getKey();
-		Attribute org = attr.remove(key);
-		if (org == attribute) {
-			return true;
-		} else {
-			if (org == null) {
-				return false;
+	final public int index(String name) {
+		return aggregate.index(name);
+	}
+
+	final public String name(int index) {
+		return aggregate.name(index);
+	}
+
+	final public AbstractAttribute attribute(int index) {
+		return attr[index];
+	}
+
+	final public boolean register(AbstractAttribute attribute) {
+		Entity entity = attribute.getSuperior();
+		if (entity == null) {
+			if (index(attribute) < 0) {
+				entity = AbstractAttribute.defaultEntity;
+				int index = entity.index(attribute);
+				if (index < 0) {
+					return false;
+				} else {
+					String name = entity.name(index);
+					register(name,attribute);
+					attribute.setEntity(this);
+					return true;
+				}
 			} else {
-				assert key.equals(org.getKey());
-				attr.put(key, org);
-				return false;
+				return true;
+			}
+		} else if (entity == this) {
+			if (index(attribute) < 0) {
+				throw new IllegalStateException();
+			} else {
+				return true;
+			}
+		} else {
+			if (index(attribute) < 0) {
+				String name = entity.name(entity.index(attribute));
+				if (entity.unregister(attribute)) {
+					register(name, attribute);
+					attribute.setEntity(this);
+					return true;
+				} else {
+					return false;
+				}
+			} else {
+				if (entity.unregister(attribute)) {
+					return true;
+				} else {
+					throw new IllegalStateException();
+				}
 			}
 		}
 	}
 
-	public int index(AbstractAttribute attribute) {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-
-	public int index(String name) {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-
-	public String name(int index) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	public AbstractAttribute attribute(int index) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	public boolean register(AbstractAttribute abstractAttribute) {
-		// TODO Auto-generated method stub
+	final public boolean unregister(AbstractAttribute attribute) {
+		int index = index(attribute);
+		if (index >= 0) {
+			attr[index] = null;
+			attribute.setEntity(null);
+		}
 		return false;
 	}
 
-	public boolean unregister(AbstractAttribute attribute) {
+	public void register(String key, AbstractAttribute attribute) {
 		// TODO Auto-generated method stub
-		return false;
+		
 	}
 
 }

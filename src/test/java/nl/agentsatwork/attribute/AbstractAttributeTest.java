@@ -6,6 +6,8 @@ import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertSame;
 import static org.junit.Assert.assertTrue;
 
+import nl.agentsatwork.attributes.Entity;
+
 import org.apache.log4j.Logger;
 import org.junit.Before;
 import org.junit.Test;
@@ -21,11 +23,11 @@ public class AbstractAttributeTest {
 
 	@Test
 	public void testAbstractAttribute() {
-		DefaultEntity superior = AbstractAttribute.defaultEntity;
-		int index = superior.index(attribute);
+		Entity entity = AbstractAttribute.defaultEntity;
+		int index = entity.index(attribute);
 		assertFalse(index < 0);
-		assertEquals("test", superior.name(index));
-		assertSame(attribute, superior.attribute(index));
+		assertEquals("test", entity.name(index));
+		assertSame(attribute, entity.attribute(index));
 	}
 
 	@Test
@@ -35,13 +37,13 @@ public class AbstractAttributeTest {
 
 	@Test
 	public void testSetSuperior() {
-		DefaultEntity superior = new DefaultEntityImpl();
-		attribute.setEntity(superior);
+		Entity entity = new DefaultEntityImpl();
+		attribute.setEntity(entity);
 
-		int index = superior.index(attribute);
+		int index = entity.index(attribute);
 		assertFalse(index < 0);
-		assertEquals("test", superior.name(index));
-		assertSame(attribute, superior.attribute(index));
+		assertEquals("test", entity.name(index));
+		assertSame(attribute, entity.attribute(index));
 
 	}
 

@@ -4,25 +4,25 @@ import nl.agentsatwork.attributes.Entity;
 
 public class AbstractIndependentAttribute extends AbstractAttribute {
 
-	private Entity superior;
+	private Entity entity;
 
 	public AbstractIndependentAttribute(String key) {
 		super(key);
-		superior = defaultEntity;
+		entity = defaultEntity;
 	}
 
 	final public Entity getSuperior() {
-		return superior;
+		return entity;
 	}
 
 	final public void setEntity(Entity superior) {
 		if (superior == null) {
-			if (this.superior != null && this.superior.unregister(this)) {
-				this.superior = null;
+			if (this.entity != null && this.entity.unregister(this)) {
+				this.entity = null;
 			}
 		} else {
 			if (superior.register(this)) {
-				this.superior = superior;
+				this.entity = superior;
 			}
 		}
 	}

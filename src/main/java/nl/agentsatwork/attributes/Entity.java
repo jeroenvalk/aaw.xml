@@ -4,6 +4,8 @@ import nl.agentsatwork.attribute.AbstractAttribute;
 
 public interface Entity {
 
+	void register(String key, AbstractAttribute attribute);
+
 	int index(AbstractAttribute attribute);
 
 	int index(String name);
