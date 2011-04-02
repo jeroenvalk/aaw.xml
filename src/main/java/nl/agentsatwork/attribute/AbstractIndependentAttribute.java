@@ -1,21 +1,21 @@
 package nl.agentsatwork.attribute;
 
-import nl.agentsatwork.attributes.Superior;
+import nl.agentsatwork.attributes.Entity;
 
 public class AbstractIndependentAttribute extends AbstractAttribute {
 
-	private Superior superior;
+	private Entity superior;
 
 	public AbstractIndependentAttribute(String key) {
 		super(key);
 		superior = defaultEntity;
 	}
 
-	final public Superior getSuperior() {
+	final public Entity getSuperior() {
 		return superior;
 	}
 
-	final public void setEntity(Superior superior) {
+	final public void setEntity(Entity superior) {
 		if (superior == null) {
 			if (this.superior != null && this.superior.unregister(this)) {
 				this.superior = null;

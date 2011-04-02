@@ -33,7 +33,7 @@ public class MutableAttributes extends ImmutableAttributes {
 	}
 
 	public Map<String, String> attr() {
-		final Superior superior = this;
+		final Entity superior = this;
 		return new AbstractMap<String, String>() {
 
 			public Set<Entry<String, String>> entrySet() {

@@ -3,10 +3,11 @@ package nl.agentsatwork.attributes;
 import java.util.HashMap;
 import java.util.Map;
 
+import nl.agentsatwork.attribute.AbstractAttribute;
 import nl.agentsatwork.attribute.Attribute;
 import nl.agentsatwork.xpath.AbstractXPath;
 
-abstract public class AbstractSuperior extends AbstractXPath implements Superior {
+public class AbstractEntity extends AbstractXPath implements Entity {
 
 	final private Map<String, Attribute> attr = new HashMap<String, Attribute>();
 	
@@ -40,6 +41,36 @@ abstract public class AbstractSuperior extends AbstractXPath implements Superior
 				return false;
 			}
 		}
+	}
+
+	public int index(AbstractAttribute attribute) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	public int index(String name) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	public String name(int index) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public AbstractAttribute attribute(int index) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public boolean register(AbstractAttribute abstractAttribute) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	public boolean unregister(AbstractAttribute attribute) {
+		// TODO Auto-generated method stub
+		return false;
 	}
 
 }

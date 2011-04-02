@@ -2,14 +2,14 @@ package nl.agentsatwork.attribute;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.fail;
-import nl.agentsatwork.attributes.Superior;
+import nl.agentsatwork.attributes.Entity;
 
 import org.junit.Before;
 import org.junit.Test;
 
 public class ImmutableAttributeTest extends AbstractIndependentAttributeTest {
 
-	protected Superior superior = null;
+	protected Entity superior = null;
 
 	@Before
 	public void setUp() {

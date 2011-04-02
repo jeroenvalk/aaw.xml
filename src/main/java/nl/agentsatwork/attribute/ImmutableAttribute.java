@@ -8,7 +8,7 @@ abstract public class ImmutableAttribute extends AbstractIndependentAttribute im
 	}
 
 	final public String getKey() {
-		nl.agentsatwork.attributes.Superior superior = getSuperior();
+		nl.agentsatwork.attributes.Entity superior = getSuperior();
 		return superior.name(superior.index(this));
 	}
 

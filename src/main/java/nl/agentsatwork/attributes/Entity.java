@@ -2,7 +2,7 @@ package nl.agentsatwork.attributes;
 
 import nl.agentsatwork.attribute.AbstractAttribute;
 
-public interface Superior {
+public interface Entity {
 
 	int index(AbstractAttribute attribute);
 

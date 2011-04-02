@@ -16,11 +16,11 @@ import org.junit.Before;
 import org.junit.Test;
 
 public class AbstractSuperiorTest {
-	protected Superior superior = null;
+	protected Entity superior = null;
 
 	@Before
 	public void setUp() throws Exception {
-		superior = new AbstractSuperior() {
+		superior = new AbstractEntity() {
 
 			public String valueOf(String name) {
 				return name;
@@ -84,7 +84,7 @@ public class AbstractSuperiorTest {
 				return "test";
 			}
 		};
-		Superior superior1 = new AbstractSuperior() {
+		Entity superior1 = new AbstractEntity() {
 
 			public String valueOf(String name) {
 				return null;

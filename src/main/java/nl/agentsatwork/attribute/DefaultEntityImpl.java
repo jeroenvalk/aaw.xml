@@ -31,7 +31,7 @@ final public class DefaultEntityImpl implements DefaultEntity {
 	}
 
 	final public boolean register(AbstractAttribute attribute) {
-		nl.agentsatwork.attributes.Superior superior = attribute.getSuperior();
+		nl.agentsatwork.attributes.Entity superior = attribute.getSuperior();
 		if (superior == null) {
 			if (attributes.indexOf(attribute) < 0) {
 				superior = AbstractAttribute.defaultEntity;

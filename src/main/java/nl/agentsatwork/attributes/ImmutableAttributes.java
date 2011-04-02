@@ -5,11 +5,12 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
 
+import nl.agentsatwork.attribute.AbstractAttribute;
 import nl.agentsatwork.attribute.Attribute;
 import nl.agentsatwork.collection.AbstractImmutableSet;
 import nl.agentsatwork.collection.AbstractIterator;
 
-public class ImmutableAttributes extends AbstractSuperior implements Attributes {
+public class ImmutableAttributes extends AbstractEntity implements Attributes {
 
 	public ImmutableAttributes(Attribute[] attribute) {
 		if (attribute != null) {
@@ -42,7 +43,7 @@ public class ImmutableAttributes extends AbstractSuperior implements Attributes 
 	}
 
 	public Map<String, String> attr() {
-		final Superior superior = this;
+		final Entity superior = this;
 		return new AbstractMap<String, String>() {
 
 			public Set<Entry<String, String>> entrySet() {
@@ -86,6 +87,11 @@ public class ImmutableAttributes extends AbstractSuperior implements Attributes 
 
 	public String valueOf(String name) {
 		return null;
+	}
+
+	public int index(AbstractAttribute attribute) {
+		// TODO Auto-generated method stub
+		return 0;
 	}
 
 }

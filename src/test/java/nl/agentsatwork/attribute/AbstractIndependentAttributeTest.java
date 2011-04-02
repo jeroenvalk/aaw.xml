@@ -4,7 +4,7 @@ import static org.junit.Assert.*;
 
 import java.util.Set;
 
-import nl.agentsatwork.attributes.Superior;
+import nl.agentsatwork.attributes.Entity;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -24,7 +24,7 @@ public class AbstractIndependentAttributeTest extends AbstractAttributeTest {
 
 	@Test
 	public void testGetSuperior() {
-		nl.agentsatwork.attributes.Superior superior = attribute.getSuperior();
+		nl.agentsatwork.attributes.Entity superior = attribute.getSuperior();
 		assertNotNull(superior);
 
 		// test disable superior
@@ -44,14 +44,14 @@ public class AbstractIndependentAttributeTest extends AbstractAttributeTest {
 	public void testSetSuperior() {
 		assertSame(AbstractAttribute.defaultEntity, attribute.getSuperior());
 		super.testSetSuperior();
-		nl.agentsatwork.attributes.Superior superior = AbstractAttribute.defaultEntity;
+		nl.agentsatwork.attributes.Entity superior = AbstractAttribute.defaultEntity;
 		assertTrue(superior.index(attribute) == -1);
 
 		assertNotNull(attribute.getSuperior());
 		assertNotSame(AbstractAttribute.defaultEntity,
 				attribute.getSuperior());
 
-		Superior superior1 = new nl.agentsatwork.attributes.Superior() {
+		Entity superior1 = new nl.agentsatwork.attributes.Entity() {
 
 			public int index(AbstractAttribute attribute) {
 				return 0;
@@ -78,7 +78,7 @@ public class AbstractIndependentAttributeTest extends AbstractAttributeTest {
 			}
 			
 		};
-		Superior superior2 = new nl.agentsatwork.attributes.Superior() {
+		Entity superior2 = new nl.agentsatwork.attributes.Entity() {
 
 			public int index(AbstractAttribute attribute) {
 				return 0;

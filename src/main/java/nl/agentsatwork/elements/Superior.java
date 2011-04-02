@@ -2,7 +2,7 @@ package nl.agentsatwork.elements;
 
 import nl.agentsatwork.element.Element;
 
-public interface Superior extends nl.agentsatwork.attributes.Superior {
+public interface Superior extends nl.agentsatwork.attributes.Entity {
 
 	Elements siblings();
 

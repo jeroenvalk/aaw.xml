@@ -8,11 +8,11 @@ public class AbstractAttribute {
 		defaultEntity.register(key, this);
 	}
 
-	public nl.agentsatwork.attributes.Superior getSuperior() {
+	public nl.agentsatwork.attributes.Entity getSuperior() {
 		return null;
 	}
 
-	public void setEntity(nl.agentsatwork.attributes.Superior superior) {
+	public void setEntity(nl.agentsatwork.attributes.Entity superior) {
 		if (superior != null) {
 			superior.register(this);
 		}
