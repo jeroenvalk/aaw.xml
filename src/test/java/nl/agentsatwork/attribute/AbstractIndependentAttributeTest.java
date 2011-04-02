@@ -19,7 +19,7 @@ public class AbstractIndependentAttributeTest extends AbstractAttributeTest {
 	@Test
 	public void testAbstractAttribute() {
 		super.testAbstractAttribute();
-		assertSame(AbstractAttribute.defaultSuperior, attribute.getSuperior());
+		assertSame(AbstractAttribute.defaultEntity, attribute.getSuperior());
 	}
 
 	@Test
@@ -28,27 +28,27 @@ public class AbstractIndependentAttributeTest extends AbstractAttributeTest {
 		assertNotNull(superior);
 
 		// test disable superior
-		attribute.setSuperior(null);
+		attribute.setEntity(null);
 		assertNull(attribute.getSuperior());
 		assertTrue(superior.index(attribute) == -1);
-		attribute.setSuperior(null);
+		attribute.setEntity(null);
 		assertNull(attribute.getSuperior());
 		assertTrue(superior.index(attribute) == -1);
 
 		// test of null stays null
-		attribute.setSuperior(superior);
+		attribute.setEntity(superior);
 		assertNull(attribute.getSuperior());
 	}
 
 	@Test
 	public void testSetSuperior() {
-		assertSame(AbstractAttribute.defaultSuperior, attribute.getSuperior());
+		assertSame(AbstractAttribute.defaultEntity, attribute.getSuperior());
 		super.testSetSuperior();
-		nl.agentsatwork.attributes.Superior superior = AbstractAttribute.defaultSuperior;
+		nl.agentsatwork.attributes.Superior superior = AbstractAttribute.defaultEntity;
 		assertTrue(superior.index(attribute) == -1);
 
 		assertNotNull(attribute.getSuperior());
-		assertNotSame(AbstractAttribute.defaultSuperior,
+		assertNotSame(AbstractAttribute.defaultEntity,
 				attribute.getSuperior());
 
 		Superior superior1 = new nl.agentsatwork.attributes.Superior() {
@@ -108,19 +108,19 @@ public class AbstractIndependentAttributeTest extends AbstractAttributeTest {
 
 		// test if registration to superior1 fails
 		assertNotSame(superior1, attribute.getSuperior());
-		attribute.setSuperior(superior1);
+		attribute.setEntity(superior1);
 		assertNotSame(superior1, attribute.getSuperior());
 
 		// register to superior2
-		attribute.setSuperior(superior2);
+		attribute.setEntity(superior2);
 		assertSame(superior2, attribute.getSuperior());
 		
 		// test if unregistration of superior2 fails
-		attribute.setSuperior(null);
+		attribute.setEntity(null);
 		assertSame(superior2, attribute.getSuperior());
-		attribute.setSuperior(AbstractAttribute.defaultSuperior);
+		attribute.setEntity(AbstractAttribute.defaultEntity);
 		assertSame(superior2, attribute.getSuperior());
-		attribute.setSuperior(superior1);
+		attribute.setEntity(superior1);
 		assertSame(superior2, attribute.getSuperior());
 		
 	}

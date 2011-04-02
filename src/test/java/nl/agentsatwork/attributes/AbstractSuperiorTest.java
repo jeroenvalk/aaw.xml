@@ -112,7 +112,7 @@ public class AbstractSuperiorTest {
 				return "test";
 			}
 		};
-		attribute.setSuperior(superior);
+		attribute.setEntity(superior);
 		assertTrue(superior.unregister(attribute));
 		assertNull(attribute.getSuperior());
 
@@ -120,7 +120,7 @@ public class AbstractSuperiorTest {
 		assertFalse(superior.unregister(attribute));
 
 		// unregistration is NOT done by key
-		attribute.setSuperior(superior);
+		attribute.setEntity(superior);
 		attribute = new MutableAttribute(superior, "test") {
 			@Override
 			protected String defaultValue() {

@@ -21,7 +21,7 @@ public class AbstractAttributeTest {
 
 	@Test
 	public void testAbstractAttribute() {
-		Superior superior = AbstractAttribute.defaultSuperior;
+		DefaultEntity superior = AbstractAttribute.defaultEntity;
 		int index = superior.index(attribute);
 		assertFalse(index < 0);
 		assertEquals("test", superior.name(index));
@@ -35,8 +35,8 @@ public class AbstractAttributeTest {
 
 	@Test
 	public void testSetSuperior() {
-		Superior superior = new DefaultSuperior();
-		attribute.setSuperior(superior);
+		DefaultEntity superior = new DefaultEntityImpl();
+		attribute.setEntity(superior);
 
 		int index = superior.index(attribute);
 		assertFalse(index < 0);

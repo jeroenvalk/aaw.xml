@@ -13,7 +13,7 @@ public class ImmutableAttributeTest extends AbstractIndependentAttributeTest {
 
 	@Before
 	public void setUp() {
-		superior = AbstractAttribute.defaultSuperior;
+		superior = AbstractAttribute.defaultEntity;
 		attribute = new ImmutableAttribute("test") {
 			public String defaultValue() {
 				return "test";
