@@ -1,5 +1,8 @@
 package nl.agentsatwork.attributes;
 
+import java.util.Map.Entry;
+import java.util.Set;
+
 import nl.agentsatwork.attribute.AbstractAttribute;
 
 public interface Entity {
@@ -17,5 +20,7 @@ public interface Entity {
 	boolean register(AbstractAttribute abstractAttribute);
 	
 	boolean unregister(AbstractAttribute attribute);
+	
+	Set<Entry<String, String>> entrySet();
 
 }

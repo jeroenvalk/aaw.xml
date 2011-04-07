@@ -2,6 +2,8 @@ package nl.agentsatwork.attribute;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map.Entry;
+import java.util.Set;
 
 import nl.agentsatwork.attributes.Entity;
 
@@ -82,6 +84,10 @@ final public class DefaultEntityImpl implements Entity {
 			attribute.setEntity(null);
 		}
 		return true;
+	}
+
+	public Set<Entry<String, String>> entrySet() {
+		throw new UnsupportedOperationException();
 	}
 
 }
