@@ -3,29 +3,46 @@ package nl.agentsatwork.collection;
 import java.util.Iterator;
 
 abstract public class AbstractIterator<A> implements Iterator<A> {
-	
-	final private AbstractImmutableIterable<A> parent;
-	
-	private A current = null;
-	private int index = -1;
-	
-	public AbstractIterator(AbstractImmutableIterable<A> parent) {
-		this.parent = parent;
-	}
 
-	final public void remove() {
-		if (current == null) {
-			throw new IllegalStateException();
+	private int i = getIndex().offset(), current = -1;
+
+	abstract protected Index<A> getIndex();
+	
+	public boolean hasNext() {
+		int n = getIndex().limit();
+		if (n > i) {
+			while (getIndex().valueOf(i) == null && ++i < n)
+				;
+			return i < n;
+		} else {
+			return false;
 		}
-		parent.remove(index, current);
-		current = null;
 	}
 
-	final public A next() {
-		current = getNext();
-		return current;
+	public A next() {
+		int n = getIndex().limit();
+		if (n > i) {
+			while (getIndex().valueOf(i) == null && ++i < n)
+				;
+			if (i < n) {
+				assert getIndex().valueOf(i) != null;
+				current = i;
+				return getIndex().valueOf(i++);
+			} else {
+				return null;
+			}
+		} else {
+			return null;
+		}
 	}
 
-	abstract public A getNext();
+	public void remove() {
+		if (current < 0) {
+			throw new IllegalStateException();
+		} else {
+			getIndex().valueOf(current, null);
+		}
+	}
+	
 	
 }

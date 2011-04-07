@@ -6,7 +6,7 @@ import java.util.Set;
 
 abstract public class AbstractCollection<A> implements Set<A> {
 
-	abstract Index<A> getIndex();
+	abstract protected Index<A> getIndex();
 	
 	public boolean add(A e) {
 		if (e == null) {
@@ -46,7 +46,7 @@ abstract public class AbstractCollection<A> implements Set<A> {
 			throw new NullPointerException();
 		}
 		try {
-			return indexOf((A) o) >= 0;
+			return getIndex().indexOf((A) o) >= 0;
 		} catch (ClassCastException e) {
 			return false;
 		}
@@ -69,61 +69,25 @@ abstract public class AbstractCollection<A> implements Set<A> {
 	}
 
 	public Iterator<A> iterator() {
-		return new Iterator<A>() {
-			private int i = offset(), current = -1;
+		final Index<A> index = getIndex();
+		return new AbstractIterator<A>() {
 
-			public Iterator() {
-				
+			protected Index<A> getIndex() {
+				return index;
 			}
 			
-			public boolean hasNext() {
-				int n = limit();
-				if (n > i) {
-					while (elementOf(i) == null && ++i < n)
-						;
-					return i < n;
-				} else {
-					return false;
-				}
-			}
-
-			public A next() {
-				int n = limit();
-				if (n > i) {
-					while (elementOf(i) == null && ++i < n)
-						;
-					if (i < n) {
-						assert elementOf(i) != null;
-						current = i;
-						return elementOf(i++);
-					} else {
-						return null;
-					}
-				} else {
-					return null;
-				}
-
-			}
-
-			public void remove() {
-				if (current < 0) {
-					throw new IllegalStateException();
-				} else {
-					elementOf(current, null);
-				}
-			}
-
 		};
 	}
 
 	public boolean remove(Object o) {
+		Index<A> index = getIndex();
 		try {
 			@SuppressWarnings("unchecked")
-			int index = indexOf((A) o);
-			if (elementOf(index) == null) {
+			int i = index.indexOf((A) o);
+			if (index.valueOf(i) == null) {
 				return false;
 			} else {
-				elementOf(index, null);
+				index.valueOf(i, null);
 				return true;
 			}
 		} catch (ClassCastException e) {
@@ -142,12 +106,13 @@ abstract public class AbstractCollection<A> implements Set<A> {
 	}
 
 	public boolean retainAll(Collection<?> c) {
+		Index<A> index = getIndex();
 		boolean result = false;
-		int n = indexSize();
-		for (int i = 0; i < n; ++i) {
-			A element = elementOf(i);
+		int n = index.limit();
+		for (int i = index.offset(); i < n; ++i) {
+			A element = index.valueOf(i);
 			if (element != null && !c.contains(element)) {
-				elementOf(i, null);
+				index.valueOf(i, null);
 				result = true;
 			}
 		}
@@ -157,10 +122,11 @@ abstract public class AbstractCollection<A> implements Set<A> {
 	abstract public int size();
 
 	public Object[] toArray() {
+		Index<A> index = getIndex();
 		Object[] result = new Object[size()];
-		int j = 0, n = indexSize();
-		for (int i = 0; i < n; ++i) {
-			A element = elementOf(i);
+		int j = 0, n = index.limit();
+		for (int i = index.offset(); i < n; ++i) {
+			A element = index.valueOf(i);
 			if (element != null) {
 				result[j++] = element;
 			}
@@ -170,12 +136,13 @@ abstract public class AbstractCollection<A> implements Set<A> {
 
 	@SuppressWarnings("unchecked")
 	public <T> T[] toArray(T[] a) {
+		Index<A> index = getIndex();
 		if (size() > a.length) {
 			a = (T[]) new Object[size()];
 		}
-		int j = 0, n = indexSize();
-		for (int i = 0; i < n; ++i) {
-			T element = (T) elementOf(i);
+		int j = 0, n = index.limit();
+		for (int i = index.offset(); i < n; ++i) {
+			T element = (T) index.valueOf(i);
 			if (element != null) {
 				a[j++] = element;
 			}
