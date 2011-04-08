@@ -1,9 +1,10 @@
 package nl.agentsatwork.collection;
 
 import java.util.Collection;
+import java.util.Iterator;
 import java.util.Set;
 
-abstract public class AbstractImmutableSet<A> extends AbstractImmutableIterable<A> implements Set<A> {
+abstract public class AbstractImmutableCollection<A> extends AbstractCollection<A> implements Set<A> {
 
 	public boolean add(A e) {
 		throw new UnsupportedOperationException();
@@ -17,17 +18,15 @@ abstract public class AbstractImmutableSet<A> extends AbstractImmutableIterable<
 		throw new UnsupportedOperationException();
 	}
 
-	public boolean containsAll(Collection<?> c) {
-		for (Object o : c) {
-			if (!contains(o)) {
-				return false;
-			}
-		}
-		return true;
-	}
+	public Iterator<A> iterator() {
+		final Index<A> index = getIndex();
+		return new AbstractImmutableIterator<A>() {
 
-	final public boolean isEmpty() {
-		return !iterator().hasNext();
+			protected Index<A> getIndex() {
+				return index;
+			}
+
+		};
 	}
 
 	public boolean remove(Object o) {
@@ -41,19 +40,5 @@ abstract public class AbstractImmutableSet<A> extends AbstractImmutableIterable<
 	public boolean retainAll(Collection<?> c) {
 		throw new UnsupportedOperationException();
 	}
-
-	final public Object[] toArray() {
-		Object[] result = new Object[size()];
-		int i = 0;
-		for (Object o : this) {
-			result[i++] = o;
-		}
-		return result;
-	}
-
-	public <T> T[] toArray(T[] a) {
-		throw new UnsupportedOperationException();
-	}
-
 
 }

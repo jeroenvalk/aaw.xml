@@ -2,7 +2,7 @@ package nl.agentsatwork.collection;
 
 public interface Index<A> {
 
-	int autonumerical();
+	void autonumerical(A value);
 	
 	int offset();
 	
@@ -12,7 +12,7 @@ public interface Index<A> {
 	
 	A valueOf(int index);
 	
-	void valueOf(int index, A value);
+	void remove(int index);
 	
 	int size();
 	

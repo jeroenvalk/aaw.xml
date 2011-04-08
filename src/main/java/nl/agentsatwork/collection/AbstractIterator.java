@@ -2,32 +2,22 @@ package nl.agentsatwork.collection;
 
 import java.util.Iterator;
 
-abstract public class AbstractIterator<A> implements Iterator<A> {
+abstract public class AbstractIterator<A> extends AbstractImmutableIterator<A> implements Iterator<A> {
 
-	private int i = getIndex().offset(), current = -1;
+	private int current = -1;
 
 	abstract protected Index<A> getIndex();
 	
-	public boolean hasNext() {
-		int n = getIndex().limit();
-		if (n > i) {
-			while (getIndex().valueOf(i) == null && ++i < n)
-				;
-			return i < n;
-		} else {
-			return false;
-		}
-	}
-
 	public A next() {
-		int n = getIndex().limit();
+		Index<A> index = getIndex();
+		int n = index.limit();
 		if (n > i) {
-			while (getIndex().valueOf(i) == null && ++i < n)
+			while (index.valueOf(i) == null && ++i < n)
 				;
 			if (i < n) {
-				assert getIndex().valueOf(i) != null;
+				assert index.valueOf(i) != null;
 				current = i;
-				return getIndex().valueOf(i++);
+				return index.valueOf(i++);
 			} else {
 				return null;
 			}

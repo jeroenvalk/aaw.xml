@@ -2,23 +2,17 @@ package nl.agentsatwork.collection;
 
 import java.util.Collection;
 import java.util.Iterator;
-import java.util.Set;
 
-abstract public class AbstractCollection<A> implements Set<A> {
+abstract public class AbstractCollection<A> implements Collection<A> {
 
 	abstract protected Index<A> getIndex();
-	
+
 	public boolean add(A e) {
 		if (e == null) {
 			throw new NullPointerException();
 		}
-		int index = getIndex().indexOf(e);
-		if (index < 0) {
-			getIndex().valueOf(getIndex().autonumerical(), e);
-			return true;
-		} else {
-			return false;
-		}
+		getIndex().autonumerical(e);
+		return true;
 	}
 
 	public boolean addAll(Collection<? extends A> c) {
@@ -34,9 +28,10 @@ abstract public class AbstractCollection<A> implements Set<A> {
 	}
 
 	public void clear() {
-		int n = getIndex().limit();
-		for (int i = getIndex().offset(); i < n; ++i) {
-			getIndex().valueOf(i, null);
+		Index<A> index = getIndex();
+		int n = index.limit();
+		for (int i = index.offset(); i < n; ++i) {
+			index.remove(i);
 		}
 	}
 
@@ -75,19 +70,25 @@ abstract public class AbstractCollection<A> implements Set<A> {
 			protected Index<A> getIndex() {
 				return index;
 			}
-			
+
 		};
 	}
 
 	public boolean remove(Object o) {
-		Index<A> index = getIndex();
+		if (o == null) {
+			return false;
+		}
 		try {
+			Index<A> index = getIndex();
 			@SuppressWarnings("unchecked")
 			int i = index.indexOf((A) o);
+			if (i < 0) {
+				return false;
+			}
 			if (index.valueOf(i) == null) {
 				return false;
 			} else {
-				index.valueOf(i, null);
+				index.remove(i);
 				return true;
 			}
 		} catch (ClassCastException e) {
@@ -112,14 +113,16 @@ abstract public class AbstractCollection<A> implements Set<A> {
 		for (int i = index.offset(); i < n; ++i) {
 			A element = index.valueOf(i);
 			if (element != null && !c.contains(element)) {
-				index.valueOf(i, null);
+				index.remove(i);
 				result = true;
 			}
 		}
 		return result;
 	}
 
-	abstract public int size();
+	public int size() {
+		return getIndex().size();
+	}
 
 	public Object[] toArray() {
 		Index<A> index = getIndex();

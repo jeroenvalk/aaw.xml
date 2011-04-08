@@ -2,35 +2,20 @@ package nl.agentsatwork.collection;
 
 import java.util.Collection;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Set;
 
-abstract public class AbstractMap<A, B> implements Map<A, B> {
-
-	private int superAutonum() {
-		return autonum();
-	}
-
-	private int superIndexSize() {
-		return indexSize();
-	}
-
-	private int superSize() {
-		return size();
-	}
+abstract public class AbstractMap<A, B> implements Map<A, B>, Index<Entry<A, B>> {
 
 	abstract protected Entry<A, B> newEntry(A key, B value);
-
-	abstract protected int autonum();
-
-	abstract protected int indexSize();
 
 	abstract protected int indexOfKey(A key);
 
 	protected int[] indicesOfValue(B value) {
 		int[] aux = new int[size() + 1];
-		int j = 1, n = indexSize();
-		for (int i = 0; i < n; ++i) {
-			B value2 = entryOf(i).getValue();
+		int j = 1, n = limit();
+		for (int i = offset(); i < n; ++i) {
+			B value2 = valueOf(i).getValue();
 			if (value == value2) {
 				aux[0] = i;
 				aux[j++] = i;
@@ -47,14 +32,10 @@ abstract public class AbstractMap<A, B> implements Map<A, B> {
 		return result;
 	}
 
-	abstract protected Entry<A, B> entryOf(int index);
-
-	abstract protected void entryOf(int index, Entry<A, B> entry);
-
 	public void clear() {
-		int n = indexSize();
+		int n = limit();
 		for (int i = 0; i < n; ++i) {
-			entryOf(i, null);
+			remove(i);
 		}
 	}
 
@@ -85,38 +66,11 @@ abstract public class AbstractMap<A, B> implements Map<A, B> {
 	}
 
 	public Set<Entry<A, B>> entrySet() {
+		final Index<Entry<A,B>> index = this;
+		return new AbstractSet<Entry<A, B>>() {
 
-		return new AbstractCollection<Entry<A, B>>() {
-
-			@Override
-			protected int autonum() {
-				return superAutonum();
-			}
-
-			@Override
-			protected int indexSize() {
-				return superIndexSize();
-			}
-
-			@Override
-			protected int indexOf(Entry<A, B> element) {
-
-				return indexOfKey(element.getKey());
-			}
-
-			@Override
-			protected Entry<A, B> elementOf(int index) {
-				return entryOf(index);
-			}
-
-			@Override
-			protected void elementOf(int index, Entry<A, B> element) {
-				entryOf(index, element);
-			}
-
-			@Override
-			public int size() {
-				return superSize();
+			protected Index<Entry<A, B>> getIndex() {
+				return index;
 			}
 
 		};
@@ -132,7 +86,7 @@ abstract public class AbstractMap<A, B> implements Map<A, B> {
 			if (index < 0) {
 				return null;
 			}
-			return entryOf(index).getValue();
+			return valueOf(index).getValue();
 		} catch (ClassCastException e) {
 			return null;
 		}
@@ -143,8 +97,45 @@ abstract public class AbstractMap<A, B> implements Map<A, B> {
 	}
 
 	public Set<A> keySet() {
-		// TODO Auto-generated method stub
-		return null;
+		final Index<Entry<A,B>> self = this;
+		final Index<A> index = new Index<A>() {
+
+			public void autonumerical(A value) {
+				throw new UnsupportedOperationException();
+			}
+
+			public int offset() {
+				return self.offset();
+			}
+
+			public int limit() {
+				return self.limit();
+			}
+
+			public int indexOf(A value) {
+				return indexOfKey(value);
+			}
+
+			public A valueOf(int index) {
+				return self.valueOf(index).getKey();
+			}
+
+			public void remove(int index) {
+				self.remove(index);
+			}
+
+			public int size() {
+				return self.size();
+			}
+			
+		};
+		return new AbstractSet<A>() {
+
+			protected Index<A> getIndex() {
+				return index;
+			}
+			
+		};
 	}
 
 	public B put(A key, B value) {
@@ -153,13 +144,10 @@ abstract public class AbstractMap<A, B> implements Map<A, B> {
 		}
 		int index = indexOfKey(key);
 		if (index < 0) {
-			index = autonum();
-			entryOf(index, newEntry(key, value));
+			autonumerical(newEntry(key, value));
 			return null;
 		} else {
-			B result = entryOf(index).getValue();
-			entryOf(index, newEntry(key, value));
-			return result;
+			return valueOf(index).setValue(value);
 		}
 	}
 
@@ -179,53 +167,47 @@ abstract public class AbstractMap<A, B> implements Map<A, B> {
 			if (index < 0) {
 				return null;
 			}
-			B result = entryOf(index).getValue();
-			entryOf(index, null);
+			B result = valueOf(index).getValue();
+			remove(index);
 			return result;
 		} catch (ClassCastException e) {
 			return null;
 		}
 	}
 
-	abstract public int size();
-
 	public Collection<B> values() {
-		// TODO Auto-generated method stub
-		return new AbstractCollection<B>() {
+		final Index<Entry<A,B>> self = this;
+		final Index<B> index = new AbstractIndex<B>() {
 
-			@Override
-			protected int autonum() {
+			public void autonumerical(B value) {
 				throw new UnsupportedOperationException();
 			}
 
-			@Override
-			protected int indexSize() {
-				// TODO Auto-generated method stub
-				return 0;
+			public int offset() {
+				return self.offset();
 			}
 
-			@Override
-			protected int indexOf(B element) {
-				// TODO Auto-generated method stub
-				return 0;
+			public int limit() {
+				return self.limit();
 			}
 
-			@Override
-			protected B elementOf(int index) {
-				// TODO Auto-generated method stub
-				return null;
+			public B valueOf(int index) {
+				return self.valueOf(index).getValue();
 			}
 
-			@Override
-			protected void elementOf(int index, B element) {
-				// TODO Auto-generated method stub
-				
+			public void remove(int index) {
+				self.remove(index);
 			}
 
-			@Override
 			public int size() {
-				// TODO Auto-generated method stub
-				return 0;
+				return self.size();
+			}
+			
+		};
+		return new AbstractCollection<B>() {
+
+			protected Index<B> getIndex() {
+				return index;
 			}
 			
 		};
