@@ -30,7 +30,7 @@ abstract public class AbstractIterator<A> extends AbstractImmutableIterator<A> i
 		if (current < 0) {
 			throw new IllegalStateException();
 		} else {
-			getIndex().valueOf(current, null);
+			getIndex().remove(current);
 		}
 	}
 	

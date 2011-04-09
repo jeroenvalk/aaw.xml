@@ -4,18 +4,24 @@
 	<name>xml</name><!-- must be artifactId minus 'aaw-' for googlecode -->
 	<description>AAW's lightweight XML toolkit</description>
 	<dependencies>
-		<dependency>
-			<groupId>junit</groupId>
-			<artifactId>junit</artifactId>
-			<version>4.7</version>
-			<scope>test</scope>
-		</dependency>
+        <dependency>
+            <groupId>org.antlr</groupId>
+            <artifactId>antlr-runtime</artifactId>
+            <version>3.2</version>
+            <scope>compile</scope>
+        </dependency>
 		<dependency>
 			<groupId>nl.agentsatwork</groupId>
 			<artifactId>aaw-antlr-xml</artifactId>
 			<version>0.0.1-SNAPSHOT</version>
 			<type>jar</type>
 			<scope>compile</scope>
+		</dependency>
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<version>4.7</version>
+			<scope>test</scope>
 		</dependency>
 		<dependency>
 			<groupId>log4j</groupId>
