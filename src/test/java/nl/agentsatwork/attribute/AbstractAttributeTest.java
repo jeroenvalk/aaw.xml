@@ -14,16 +14,16 @@ import org.junit.Test;
 
 public class AbstractAttributeTest {
 	static private Logger logger = Logger.getLogger(AbstractAttributeTest.class);
-	protected AbstractAttribute attribute = null;
+	protected AbstractImmutableAttribute attribute = null;
 
 	@Before
 	public void setUp() {
-		attribute = new AbstractAttribute("test");
+		attribute = new AbstractImmutableAttribute("test");
 	}
 
 	@Test
 	public void testAbstractAttribute() {
-		Entity entity = AbstractAttribute.defaultEntity;
+		Entity entity = AbstractImmutableAttribute.defaultEntity;
 		int index = entity.index(attribute);
 		assertFalse(index < 0);
 		assertEquals("test", entity.name(index));

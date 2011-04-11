@@ -19,7 +19,7 @@ public class AbstractIndependentAttributeTest extends AbstractAttributeTest {
 	@Test
 	public void testAbstractAttribute() {
 		super.testAbstractAttribute();
-		assertSame(AbstractAttribute.defaultEntity, attribute.getSuperior());
+		assertSame(AbstractImmutableAttribute.defaultEntity, attribute.getSuperior());
 	}
 
 	@Test
@@ -42,18 +42,18 @@ public class AbstractIndependentAttributeTest extends AbstractAttributeTest {
 
 	@Test
 	public void testSetSuperior() {
-		assertSame(AbstractAttribute.defaultEntity, attribute.getSuperior());
+		assertSame(AbstractImmutableAttribute.defaultEntity, attribute.getSuperior());
 		super.testSetSuperior();
-		nl.agentsatwork.attributes.Entity superior = AbstractAttribute.defaultEntity;
+		nl.agentsatwork.attributes.Entity superior = AbstractImmutableAttribute.defaultEntity;
 		assertTrue(superior.index(attribute) == -1);
 
 		assertNotNull(attribute.getSuperior());
-		assertNotSame(AbstractAttribute.defaultEntity,
+		assertNotSame(AbstractImmutableAttribute.defaultEntity,
 				attribute.getSuperior());
 
 		Entity superior1 = new Entity() {
 
-			public int index(AbstractAttribute attribute) {
+			public int index(AbstractImmutableAttribute attribute) {
 				return 0;
 			}
 
@@ -65,19 +65,19 @@ public class AbstractIndependentAttributeTest extends AbstractAttributeTest {
 				return null;
 			}
 
-			public AbstractAttribute attribute(int index) {
+			public AbstractImmutableAttribute attribute(int index) {
 				return null;
 			}
 
-			public boolean register(AbstractAttribute abstractAttribute) {
+			public boolean register(AbstractImmutableAttribute abstractAttribute) {
 				return false;
 			}
 
-			public boolean unregister(AbstractAttribute attribute) {
+			public boolean unregister(AbstractImmutableAttribute attribute) {
 				return false;
 			}
 
-			public void register(String key, AbstractAttribute attribute) {
+			public void register(String key, AbstractImmutableAttribute attribute) {
 				// TODO Auto-generated method stub
 				
 			}
@@ -85,7 +85,7 @@ public class AbstractIndependentAttributeTest extends AbstractAttributeTest {
 		};
 		Entity superior2 = new Entity() {
 
-			public int index(AbstractAttribute attribute) {
+			public int index(AbstractImmutableAttribute attribute) {
 				return 0;
 			}
 
@@ -97,19 +97,19 @@ public class AbstractIndependentAttributeTest extends AbstractAttributeTest {
 				return null;
 			}
 
-			public AbstractAttribute attribute(int index) {
+			public AbstractImmutableAttribute attribute(int index) {
 				return null;
 			}
 
-			public boolean register(AbstractAttribute abstractAttribute) {
+			public boolean register(AbstractImmutableAttribute abstractAttribute) {
 				return true;
 			}
 
-			public boolean unregister(AbstractAttribute attribute) {
+			public boolean unregister(AbstractImmutableAttribute attribute) {
 				return false;
 			}
 
-			public void register(String key, AbstractAttribute attribute) {
+			public void register(String key, AbstractImmutableAttribute attribute) {
 				// TODO Auto-generated method stub
 				
 			}
@@ -128,7 +128,7 @@ public class AbstractIndependentAttributeTest extends AbstractAttributeTest {
 		// test if unregistration of superior2 fails
 		attribute.setEntity(null);
 		assertSame(superior2, attribute.getSuperior());
-		attribute.setEntity(AbstractAttribute.defaultEntity);
+		attribute.setEntity(AbstractImmutableAttribute.defaultEntity);
 		assertSame(superior2, attribute.getSuperior());
 		attribute.setEntity(superior1);
 		assertSame(superior2, attribute.getSuperior());
