@@ -10,15 +10,15 @@ import nl.agentsatwork.attributes.Entity;
 final public class DefaultEntityImpl implements Entity {
 
 	final private List<String> keys = new ArrayList<String>();
-	final private List<AbstractAttribute> attributes = new ArrayList<AbstractAttribute>();
+	final private List<AbstractImmutableAttribute> attributes = new ArrayList<AbstractImmutableAttribute>();
 
-	final public void register(String key, AbstractAttribute attribute) {
+	final public void register(String key, AbstractImmutableAttribute attribute) {
 		assert keys.size() == attributes.size();
 		keys.add(key);
 		attributes.add(attribute);
 	}
 
-	final public int index(AbstractAttribute attribute) {
+	final public int index(AbstractImmutableAttribute attribute) {
 		return attributes.indexOf(attribute);
 	}
 
@@ -30,15 +30,15 @@ final public class DefaultEntityImpl implements Entity {
 		return keys.get(index);
 	}
 
-	final public AbstractAttribute attribute(int index) {
+	final public AbstractImmutableAttribute attribute(int index) {
 		return attributes.get(index);
 	}
 
-	final public boolean register(AbstractAttribute attribute) {
+	final public boolean register(AbstractImmutableAttribute attribute) {
 		Entity entity = attribute.getSuperior();
 		if (entity == null) {
 			if (index(attribute) < 0) {
-				entity = AbstractAttribute.defaultEntity;
+				entity = AbstractImmutableAttribute.defaultEntity;
 				int index = entity.index(attribute);
 				if (index < 0) {
 					return false;
@@ -77,7 +77,7 @@ final public class DefaultEntityImpl implements Entity {
 		}
 	}
 
-	final public boolean unregister(AbstractAttribute attribute) {
+	final public boolean unregister(AbstractImmutableAttribute attribute) {
 		int index = attributes.indexOf(attribute);
 		if (index >= 0) {
 			attributes.set(index, null);

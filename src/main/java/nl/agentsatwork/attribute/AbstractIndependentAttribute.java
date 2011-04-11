@@ -2,7 +2,7 @@ package nl.agentsatwork.attribute;
 
 import nl.agentsatwork.attributes.Entity;
 
-public class AbstractIndependentAttribute extends AbstractAttribute {
+public class AbstractIndependentAttribute extends AbstractImmutableAttribute {
 
 	private Entity entity;
 
