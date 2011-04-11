@@ -2,7 +2,7 @@ package nl.agentsatwork.aggregates;
 
 import nl.agentsatwork.collection.Index;
 
-abstract public class AbstractAggregate implements Aggregate {
+abstract public class AbstractAggregate extends AbstractEntity implements Aggregate {
 
 	abstract protected Index<Entity> getIndex();
 
