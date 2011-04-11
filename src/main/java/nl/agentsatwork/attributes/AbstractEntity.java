@@ -4,7 +4,7 @@ import java.util.Iterator;
 import java.util.Map.Entry;
 import java.util.Set;
 
-import nl.agentsatwork.attribute.AbstractAttribute;
+import nl.agentsatwork.attribute.AbstractImmutableAttribute;
 import nl.agentsatwork.attribute.Attribute;
 import nl.agentsatwork.collection.AbstractIterator;
 import nl.agentsatwork.collection.AbstractSet;
@@ -14,9 +14,9 @@ import nl.agentsatwork.xpath.AbstractXPath;
 public class AbstractEntity extends AbstractXPath implements Entity {
 
 	private Superior aggregate = null;
-	private AbstractAttribute[] attr = null;
+	private AbstractImmutableAttribute[] attr = null;
 
-	final public int index(AbstractAttribute attribute) {
+	final public int index(AbstractImmutableAttribute attribute) {
 		for (int i = 0; i < attr.length; ++i) {
 			if (attr[i] == attribute) {
 				return i;
@@ -33,15 +33,15 @@ public class AbstractEntity extends AbstractXPath implements Entity {
 		return aggregate.name(index);
 	}
 
-	final public AbstractAttribute attribute(int index) {
+	final public AbstractImmutableAttribute attribute(int index) {
 		return attr[index];
 	}
 
-	final public boolean register(AbstractAttribute attribute) {
+	final public boolean register(AbstractImmutableAttribute attribute) {
 		Entity entity = attribute.getSuperior();
 		if (entity == null) {
 			if (index(attribute) < 0) {
-				entity = AbstractAttribute.defaultEntity;
+				entity = AbstractImmutableAttribute.defaultEntity;
 				int index = entity.index(attribute);
 				if (index < 0) {
 					return false;
@@ -80,7 +80,7 @@ public class AbstractEntity extends AbstractXPath implements Entity {
 		}
 	}
 
-	final public boolean unregister(AbstractAttribute attribute) {
+	final public boolean unregister(AbstractImmutableAttribute attribute) {
 		int index = index(attribute);
 		if (index >= 0) {
 			attr[index] = null;
@@ -89,7 +89,7 @@ public class AbstractEntity extends AbstractXPath implements Entity {
 		return false;
 	}
 
-	public void register(String key, AbstractAttribute attribute) {
+	public void register(String key, AbstractImmutableAttribute attribute) {
 		int index = aggregate.index(key);
 		attr[index] = attribute;
 	}
@@ -101,7 +101,7 @@ public class AbstractEntity extends AbstractXPath implements Entity {
 				if (o == null) {
 					return false;
 				} else {
-					if (o instanceof AbstractAttribute && index((AbstractAttribute) o) >= 0) {
+					if (o instanceof AbstractImmutableAttribute && index((AbstractImmutableAttribute) o) >= 0) {
 						return true;
 					}
 					if (o instanceof Entry<?,?>) {
