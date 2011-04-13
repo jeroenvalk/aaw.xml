@@ -2,61 +2,53 @@ package nl.agentsatwork.aggregates;
 
 import nl.agentsatwork.collection.Index;
 
-abstract public class AbstractAggregate extends AbstractEntity implements Aggregate {
+abstract public class AbstractAggregate extends AbstractEntity implements
+		Aggregate {
 
 	abstract protected Index<Entity> getIndex();
 
-	final public boolean enter(Entity entity) {
+	abstract protected <A> void autonum(A value);
+
+	abstract protected void delete(int i);
+
+	final public boolean entering(AbstractEntity entity) {
+		assert entity != null;
 		Aggregate aggregate = entity.getAggregate();
-		if (aggregate == this) {
-			assert getIndex().indexOf(entity) >= 0;
-			assert getIndex().valueOf(getIndex().indexOf(entity)) == entity;
+		assert aggregate != this;
+		Index<Entity> index = getIndex();
+		int i = index.indexOf(entity);
+		if (i < 0) {
+			autonum(entity);
+			assert index.valueOf(index.indexOf(entity)) == entity;
+			if (entity.leave(aggregate)) {
+				return true;
+			} else {
+				delete(index.indexOf(entity));
+				return false;
+			}
+		} else {
+			return index.valueOf(i) == entity;
+		}
+	}
+
+	final public boolean leaving(AbstractEntity entity) {
+		assert entity.getAggregate() == this;
+		Index<Entity> index = getIndex();
+		int i = index.indexOf(entity);
+		if (i < 0) {
 			return true;
 		} else {
-			if (entity instanceof AbstractEntity) {
-				Index<Entity> index = getIndex();
-				int i = index.indexOf(entity);
-				if (i < 0) {
-					index.autonumerical(entity);
-					if (aggregate.leave(entity)) {
-						if (((AbstractEntity) entity).setAggregate(this)) {
-							return true;
-						} else {
-							throw new AssertionError();
-						}
-					} else {
-						i = index.indexOf(entity);
-						assert index.valueOf(i) == entity;
-						index.remove(i);
-						return false;
-					}
-				} else {
-					assert index.valueOf(i) != entity;
-					return false;
-				}
+			if (index.valueOf(i) == entity) {
+				return leaving(i);
 			} else {
-				return entity.enter(this);
+				return true;
 			}
 		}
 	}
 
-	final public boolean leave(Entity entity) {
-		if (entity.getAggregate() == this) {
-			if (entity instanceof AbstractEntity) {
-				Index<Entity> index = getIndex();
-				int i = index.indexOf(entity);
-				assert index.valueOf(i) == entity;
-				if (((AbstractEntity) entity).setAggregate(null)) {
-					index.remove(i);
-					return true;
-				} else {
-					return false;
-				}
-			} else {
-				return entity.leave(this);
-			}
-		} else {
-			return true;
-		}
+	private boolean leaving(int index) {
+		getIndex().remove(index);
+		return true;
 	}
+	
 }
