@@ -2,20 +2,22 @@ package nl.agentsatwork.collection;
 
 import java.util.Collection;
 import java.util.Map;
-import java.util.Map.Entry;
 import java.util.Set;
 
-abstract public class AbstractMap<A, B> implements Map<A, B>, Index<Entry<A, B>> {
+abstract public class AbstractMap<A, B> implements Map<A, B> {
 
 	abstract protected Entry<A, B> newEntry(A key, B value);
 
 	abstract protected int indexOfKey(A key);
 
+	abstract protected Index<? extends Entry<A,B>> getIndex();
+	
 	protected int[] indicesOfValue(B value) {
+		Index<? extends Entry<A,B>> index = getIndex();
 		int[] aux = new int[size() + 1];
-		int j = 1, n = limit();
-		for (int i = offset(); i < n; ++i) {
-			B value2 = valueOf(i).getValue();
+		int j = 1, n = index.limit();
+		for (int i = index.offset(); i < n; ++i) {
+			B value2 = index.valueOf(i).getValue();
 			if (value == value2) {
 				aux[0] = i;
 				aux[j++] = i;
@@ -33,9 +35,10 @@ abstract public class AbstractMap<A, B> implements Map<A, B>, Index<Entry<A, B>>
 	}
 
 	public void clear() {
-		int n = limit();
+		Index<? extends Entry<A,B>> index = getIndex();
+		int n = index.limit();
 		for (int i = 0; i < n; ++i) {
-			remove(i);
+			index.remove(i);
 		}
 	}
 
@@ -66,11 +69,12 @@ abstract public class AbstractMap<A, B> implements Map<A, B>, Index<Entry<A, B>>
 	}
 
 	public Set<Entry<A, B>> entrySet() {
-		final Index<Entry<A,B>> index = this;
+		final Index<? extends Entry<A,B>> index = getIndex();
 		return new AbstractSet<Entry<A, B>>() {
 
+			@SuppressWarnings("unchecked")
 			protected Index<Entry<A, B>> getIndex() {
-				return index;
+				return (Index<Entry<A, B>>) index;
 			}
 
 		};
@@ -86,7 +90,7 @@ abstract public class AbstractMap<A, B> implements Map<A, B>, Index<Entry<A, B>>
 			if (index < 0) {
 				return null;
 			}
-			return valueOf(index).getValue();
+			return getIndex().valueOf(index).getValue();
 		} catch (ClassCastException e) {
 			return null;
 		}
@@ -97,7 +101,7 @@ abstract public class AbstractMap<A, B> implements Map<A, B>, Index<Entry<A, B>>
 	}
 
 	public Set<A> keySet() {
-		final Index<Entry<A,B>> self = this;
+		final Index<? extends Entry<A,B>> self = getIndex();
 		final Index<A> index = new Index<A>() {
 
 			public void autonumerical(A value) {
@@ -142,12 +146,14 @@ abstract public class AbstractMap<A, B> implements Map<A, B>, Index<Entry<A, B>>
 		if (key == null || value == null) {
 			throw new NullPointerException();
 		}
-		int index = indexOfKey(key);
-		if (index < 0) {
-			autonumerical(newEntry(key, value));
+		@SuppressWarnings("unchecked")
+		Index<Entry<A,B>> index = (Index<Entry<A, B>>) getIndex();
+		int i = indexOfKey(key);
+		if (i < 0) {
+			index.autonumerical(newEntry(key, value));
 			return null;
 		} else {
-			return valueOf(index).setValue(value);
+			return index.valueOf(i).setValue(value);
 		}
 	}
 
@@ -167,8 +173,8 @@ abstract public class AbstractMap<A, B> implements Map<A, B>, Index<Entry<A, B>>
 			if (index < 0) {
 				return null;
 			}
-			B result = valueOf(index).getValue();
-			remove(index);
+			B result = getIndex().valueOf(index).getValue();
+			getIndex().remove(index);
 			return result;
 		} catch (ClassCastException e) {
 			return null;
@@ -176,8 +182,8 @@ abstract public class AbstractMap<A, B> implements Map<A, B>, Index<Entry<A, B>>
 	}
 
 	public Collection<B> values() {
-		final Index<Entry<A,B>> self = this;
-		final Index<B> index = new AbstractIndex<B>() {
+		final Index<? extends Entry<A,B>> self = getIndex();
+		final Index<B> index = new AbstractHashIndex<B>() {
 
 			public void autonumerical(B value) {
 				throw new UnsupportedOperationException();

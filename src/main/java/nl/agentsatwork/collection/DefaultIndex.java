@@ -1,6 +1,6 @@
 package nl.agentsatwork.collection;
 
-public class DefaultIndex<A> extends AbstractIndex<A> implements Index<A> {
+public class DefaultIndex<A> extends AbstractHashIndex<A> implements Index<A> {
 
 	final private int bits;
 	private int offset = 0, limit = 0, size = 0;
