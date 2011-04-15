@@ -4,6 +4,6 @@ public interface Aggregate {
 
 	int enter(Object entity);
 
-	boolean leave(Object entity, int position);
+	boolean leave(int position);
 
 }

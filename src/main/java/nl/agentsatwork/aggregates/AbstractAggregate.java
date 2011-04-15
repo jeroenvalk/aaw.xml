@@ -52,20 +52,13 @@ abstract public class AbstractAggregate extends AbstractEntity implements
 		}
 	}
 
-	final public boolean leave(Object value, int position) {
+	final public boolean leave(int position) {
+		AggregateIndex index = getIndex();
+		Object value = index.valueOf(position);
 		if (value instanceof Entity) {
 			return ((Entity) value).leave(this);
 		} else {
-			AggregateIndex index = getIndex();
-			if (position < 0) {
-				position = index.indexOf(value);
-				if (position < 0) {
-					return true;
-				}
-			}
-			if (index.valueOf(position) == value) {
-				index.remove(position);
-			}
+			index.remove(position);
 			return true;
 		}
 	}
