@@ -3,8 +3,10 @@ package nl.agentsatwork.aggregates;
 public interface Entity {
 
 	Aggregate getAggregate();
+
+	int getPosition();
 	
-	boolean enter(Aggregate aggregate);
+	int enter(Aggregate aggregate);
 	
 	boolean leave(Aggregate aggregate);
 	

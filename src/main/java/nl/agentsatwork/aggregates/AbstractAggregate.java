@@ -1,54 +1,72 @@
 package nl.agentsatwork.aggregates;
 
-import nl.agentsatwork.collection.Index;
+import nl.agentsatwork.collection.AggregateIndex;
 
 abstract public class AbstractAggregate extends AbstractEntity implements
 		Aggregate {
 
-	abstract protected Index<Entity> getIndex();
+	abstract protected AggregateIndex getIndex();
 
-	abstract protected <A> void autonum(A value);
-
-	abstract protected void delete(int i);
-
-	final public boolean entering(AbstractEntity entity) {
+	final protected int entering(AbstractEntity entity) {
 		assert entity != null;
 		Aggregate aggregate = entity.getAggregate();
 		assert aggregate != this;
-		Index<Entity> index = getIndex();
-		int i = index.indexOf(entity);
-		if (i < 0) {
-			autonum(entity);
-			assert index.valueOf(index.indexOf(entity)) == entity;
-			if (entity.leave(aggregate)) {
-				return true;
-			} else {
-				delete(index.indexOf(entity));
-				return false;
+		AggregateIndex index = getIndex();
+		int i = index.autonumerical(entity);
+		if (i >= 0) {
+			assert index.valueOf(i) == entity;
+			if (!entity.leave(aggregate)) {
+				index.remove(i);
+				return -1;
 			}
-		} else {
-			return index.valueOf(i) == entity;
 		}
+		return i;
 	}
 
-	final public boolean leaving(AbstractEntity entity) {
+	final protected boolean leaving(AbstractEntity entity, int position) {
 		assert entity.getAggregate() == this;
-		Index<Entity> index = getIndex();
-		int i = index.indexOf(entity);
-		if (i < 0) {
-			return true;
-		} else {
-			if (index.valueOf(i) == entity) {
-				return leaving(i);
-			} else {
+		AggregateIndex index = getIndex();
+		if (position < 0) {
+			position = index.indexOf(entity);
+			if (position < 0) {
 				return true;
 			}
 		}
-	}
-
-	private boolean leaving(int index) {
-		getIndex().remove(index);
+		if (index.valueOf(position) == entity) {
+			index.remove(position);
+		}
 		return true;
 	}
-	
+
+	final public int enter(Object value) {
+		if (value instanceof Entity) {
+			return ((Entity) value).enter(this);
+		} else {
+			AggregateIndex index = getIndex();
+			int i = index.indexOf(value);
+			if (i < 0 || index.valueOf(i) != value) {
+				return index.autonumerical(value);
+			} else {
+				return i;
+			}
+		}
+	}
+
+	final public boolean leave(Object value, int position) {
+		if (value instanceof Entity) {
+			return ((Entity) value).leave(this);
+		} else {
+			AggregateIndex index = getIndex();
+			if (position < 0) {
+				position = index.indexOf(value);
+				if (position < 0) {
+					return true;
+				}
+			}
+			if (index.valueOf(position) == value) {
+				index.remove(position);
+			}
+			return true;
+		}
+	}
 }

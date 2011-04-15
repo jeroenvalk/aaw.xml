@@ -2,8 +2,8 @@ package nl.agentsatwork.aggregates;
 
 public interface Aggregate {
 
-	boolean enter(Entity entity);
+	int enter(Object entity);
 
-	boolean leave(Entity entity);
+	boolean leave(Object entity, int position);
 
 }
