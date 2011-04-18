@@ -1,5 +1,7 @@
 package nl.agentsatwork.xml;
 
+import nl.agentsatwork.elements.Elements;
+
 
 public class XMLTest {
 	private class Property {
@@ -31,9 +33,8 @@ public class XMLTest {
 		example = new Example();
 	}
 
-	/*
 	public void testXML() {
-		Elements example = new XML<Example,Example>() {
+		Tag example = new XML<Example,Example>() {
 
 			@Override
 			public void refresh(Example y) {
@@ -59,5 +60,5 @@ public class XMLTest {
 			
 		};
 	}
-	*/
+
 }

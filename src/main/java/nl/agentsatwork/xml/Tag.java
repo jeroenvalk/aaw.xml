@@ -1,5 +1,9 @@
 package nl.agentsatwork.xml;
 
-public interface Tag {
+import nl.agentsatwork.elements.Elements;
 
+public interface Tag {
+	
+	Elements setTagName(String tagName);
+	
 }

@@ -4,11 +4,15 @@ import java.util.Iterator;
 
 import nl.agentsatwork.elements.Elements;
 
-abstract public class XML<A,B> implements Tag, Elements {
+abstract public class XML<A,B> implements Tag {
 	protected Iterator<B> _ = null;
 	
 	abstract public void refresh(A y);
 
+	public Elements setTagName(String tagName) {
+		return null;
+	}
+	
 	protected Iterator<B> singleton(final B x) {
 		return new Iterator<B>() {
 			private B current = x;
