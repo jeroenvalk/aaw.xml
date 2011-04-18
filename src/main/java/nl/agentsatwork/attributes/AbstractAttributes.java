@@ -2,21 +2,21 @@ package nl.agentsatwork.attributes;
 
 import java.util.Map;
 
-import nl.agentsatwork.aggregates.AbstractAggregate;
-import nl.agentsatwork.aggregates.Aggregate;
 import nl.agentsatwork.aggregates.Entity;
-import nl.agentsatwork.aggregates.Location;
 import nl.agentsatwork.attribute.Attribute;
 import nl.agentsatwork.collection.AbstractIndex;
 import nl.agentsatwork.collection.AbstractMap;
 import nl.agentsatwork.collection.Index;
-import nl.agentsatwork.elements.Elements;
 
 abstract public class AbstractAttributes extends AbstractIndex implements Attributes {
 
 	protected Attribute[] attr;
 
 	abstract protected Index getNameIndex();
+
+	public AbstractAttributes(Attribute[] attribute) {
+		attr = attribute;
+	}
 	
 	public int autonumerical(Object value) {
 		assert value instanceof Attribute;

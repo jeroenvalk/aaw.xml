@@ -1,25 +1,24 @@
 package nl.agentsatwork.element;
 
-import java.util.HashMap;
-import java.util.Map;
-
+import nl.agentsatwork.aggregates.Location;
 import nl.agentsatwork.antlr.XPath;
 import nl.agentsatwork.attribute.Attribute;
-import nl.agentsatwork.attributes.ImmutableAttributes;
+import nl.agentsatwork.attributes.AbstractAttributes;
+import nl.agentsatwork.collection.Index;
 import nl.agentsatwork.collection.Tuple;
 import nl.agentsatwork.elements.Elements;
-import nl.agentsatwork.elements.Superior;
 
 import org.antlr.runtime.RecognitionException;
 import org.antlr.runtime.tree.Tree;
 
-public class ImmutableElement extends ImmutableAttributes implements Element {
+public class AbstractElement extends AbstractAttributes implements Element {
 
-	private Superior superior = null;
-	final Map<String, Elements> elements = new HashMap<String, Elements>();
+	private Elements siblings = null;
+	private Elements[] elements = null;
 
-	public ImmutableElement(Attribute[] attribute, Elements[] elements) {
+	public AbstractElement(Attribute[] attribute, Elements[] elements) {
 		super(attribute);
+		this.elements = elements;
 	}
 
 	public boolean hasTagName(String tagname) {
@@ -27,14 +26,13 @@ public class ImmutableElement extends ImmutableAttributes implements Element {
 	}
 
 	public String getTagName() {
-		return superior.siblings().getTagName();
+		return siblings.getTagName();
 	}
 
-	public Tuple<Element> xpath(String path) throws RecognitionException {
-		Tree tree = parse(path);
+	public Tuple<Element> xpath(Tree tree) {
 		switch (tree.getType()) {
 		case 0:
-			return xpath(tree);
+			return xpathaux(tree);
 		case XPath.PATHSEP:
 		case XPath.ABRPATH:
 			assert false;
@@ -46,10 +44,10 @@ public class ImmutableElement extends ImmutableAttributes implements Element {
 		return null;
 	}
 
-	public Tuple<Element> xpath(Tree path) {
+	public Tuple<Element> xpathaux(Tree path) {
 		switch (path.getType()) {
 		case XPath.PATHSEP:
-			return superior.siblings().xpath(path);
+			return siblings.xpath(path);
 		case XPath.PATH:
 			assert path.getChildCount() > 0;
 			switch (path.getChild(0).getType()) {
@@ -62,7 +60,7 @@ public class ImmutableElement extends ImmutableAttributes implements Element {
 				return null;
 			case XPath.Ancestor:
 			case XPath.Parent:
-				return superior.siblings().xpath(path);
+				return siblings.xpath(path);
 			case XPath.Child:
 			case XPath.Descendant:
 			case XPath.Attribute:
@@ -120,4 +118,19 @@ public class ImmutableElement extends ImmutableAttributes implements Element {
 	 * 
 	 * private boolean evaluate(Element predicate) { return false; }
 	 */
+
+	public Location getLocation() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public Tuple<Element> xpath(String path) throws RecognitionException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	protected Index getNameIndex() {
+		return siblings.getAttributeNames();
+	}
 }

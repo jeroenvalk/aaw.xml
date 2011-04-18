@@ -6,11 +6,13 @@ import nl.agentsatwork.element.Element;
 
 import org.antlr.runtime.tree.Tree;
 
-public interface Elements extends Tuple<Element>{
+public interface Elements extends Tuple<Element> {
 
 	String getTagName();
 
-	Index<String> getAttributeNames();
+	Index getTagNames();
+	
+	Index getAttributeNames();
 
 	Tuple<Element> xpath(Tree path);
 	
