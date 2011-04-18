@@ -6,7 +6,6 @@ import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 import nl.agentsatwork.attribute.Attribute;
-import nl.agentsatwork.attribute.ImmutableAttribute;
 
 import org.junit.Before;
 import org.junit.Test;

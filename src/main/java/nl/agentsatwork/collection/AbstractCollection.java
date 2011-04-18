@@ -5,13 +5,13 @@ import java.util.Iterator;
 
 abstract public class AbstractCollection<A> implements Collection<A> {
 
-	abstract protected Index<A> getIndex();
+	abstract protected Index getIndex();
 
 	public boolean add(A e) {
 		if (e == null) {
 			throw new NullPointerException();
 		}
-		getIndex().autonumerical(e);
+		getIndex().enter(e);
 		return true;
 	}
 
@@ -28,20 +28,19 @@ abstract public class AbstractCollection<A> implements Collection<A> {
 	}
 
 	public void clear() {
-		Index<A> index = getIndex();
+		Index index = getIndex();
 		int n = index.limit();
 		for (int i = index.offset(); i < n; ++i) {
-			index.remove(i);
+			index.leave(i);
 		}
 	}
 
-	@SuppressWarnings("unchecked")
 	public boolean contains(Object o) {
 		if (o == null) {
 			throw new NullPointerException();
 		}
 		try {
-			return getIndex().indexOf((A) o) >= 0;
+			return getIndex().indexOf(o) >= 0;
 		} catch (ClassCastException e) {
 			return false;
 		}
@@ -64,10 +63,10 @@ abstract public class AbstractCollection<A> implements Collection<A> {
 	}
 
 	public Iterator<A> iterator() {
-		final Index<A> index = getIndex();
+		final Index index = getIndex();
 		return new AbstractIterator<A>() {
 
-			protected Index<A> getIndex() {
+			protected Index getIndex() {
 				return index;
 			}
 
@@ -79,17 +78,15 @@ abstract public class AbstractCollection<A> implements Collection<A> {
 			return false;
 		}
 		try {
-			Index<A> index = getIndex();
-			@SuppressWarnings("unchecked")
-			int i = index.indexOf((A) o);
+			Index index = getIndex();
+			int i = index.indexOf(o);
 			if (i < 0) {
 				return false;
 			}
 			if (index.valueOf(i) == null) {
 				return false;
 			} else {
-				index.remove(i);
-				return true;
+				return index.leave(i);
 			}
 		} catch (ClassCastException e) {
 			return false;
@@ -107,14 +104,13 @@ abstract public class AbstractCollection<A> implements Collection<A> {
 	}
 
 	public boolean retainAll(Collection<?> c) {
-		Index<A> index = getIndex();
+		Index index = getIndex();
 		boolean result = false;
 		int n = index.limit();
 		for (int i = index.offset(); i < n; ++i) {
-			A element = index.valueOf(i);
+			Object element = index.valueOf(i);
 			if (element != null && !c.contains(element)) {
-				index.remove(i);
-				result = true;
+				result = index.leave(i);
 			}
 		}
 		return result;
@@ -125,11 +121,11 @@ abstract public class AbstractCollection<A> implements Collection<A> {
 	}
 
 	public Object[] toArray() {
-		Index<A> index = getIndex();
+		Index index = getIndex();
 		Object[] result = new Object[size()];
 		int j = 0, n = index.limit();
 		for (int i = index.offset(); i < n; ++i) {
-			A element = index.valueOf(i);
+			Object element = index.valueOf(i);
 			if (element != null) {
 				result[j++] = element;
 			}
@@ -139,7 +135,7 @@ abstract public class AbstractCollection<A> implements Collection<A> {
 
 	@SuppressWarnings("unchecked")
 	public <T> T[] toArray(T[] a) {
-		Index<A> index = getIndex();
+		Index index = getIndex();
 		if (size() > a.length) {
 			a = (T[]) new Object[size()];
 		}

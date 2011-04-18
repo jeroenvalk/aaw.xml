@@ -6,36 +6,35 @@ abstract public class AbstractEntity implements Entity {
 		assert aggregate != null;
 		int i = aggregate.entering(this);
 		if (i >= 0) {
-			assert getAggregate() == null;
-			setAggregate(aggregate);
-			setPosition(i);
+			Location location = getLocation();
+			assert location.getAggregate() == null;
+			location.setAggregate(aggregate);
+			location.setPosition(i);
 		}
 		return i;
 	}
 
 	final private boolean leaving(AbstractAggregate aggregate) {
 		assert aggregate != null;
-		assert getAggregate() == aggregate;
-		if (aggregate.leaving(this, getPosition())) {
-			assert getAggregate() == aggregate;
-			setAggregate(null);
+		Location location = getLocation();
+		assert location.getAggregate() == aggregate;
+		if (aggregate.leaving(this, location.getPosition())) {
+			assert location.getAggregate() == aggregate;
+			location.setAggregate(null);
 			return true;
 		} else {
-			assert getAggregate() == aggregate;
+			assert location.getAggregate() == aggregate;
 			return false;
 		}
 	}
 
-	abstract protected void setAggregate(Aggregate aggregate);
-
-	abstract protected void setPosition(int i);
-	
 	final public int enter(Aggregate aggregate) {
 		if (aggregate == null) {
 			throw new IllegalArgumentException();
 		}
-		if (aggregate == getAggregate()) {
-			return getPosition();
+		Location location = getLocation();
+		if (aggregate == location.getAggregate()) {
+			return location.getPosition();
 		} else {
 			if (aggregate instanceof AbstractAggregate) {
 				return entering((AbstractAggregate) aggregate);
@@ -49,11 +48,12 @@ abstract public class AbstractEntity implements Entity {
 		if (aggregate == null) {
 			throw new IllegalArgumentException();
 		}
-		if (aggregate == getAggregate()) {
+		Location location = getLocation();
+		if (aggregate == location.getAggregate()) {
 			if (aggregate instanceof AbstractAggregate) {
 				return leaving((AbstractAggregate) aggregate);
 			} else {
-				return aggregate.leave(this, getPosition());
+				return aggregate.leave(location.getPosition());
 			}
 		} else {
 			return true;

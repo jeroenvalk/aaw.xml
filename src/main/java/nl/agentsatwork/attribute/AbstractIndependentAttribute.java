@@ -1,29 +1,51 @@
 package nl.agentsatwork.attribute;
 
-import nl.agentsatwork.attributes.Entity;
+import nl.agentsatwork.aggregates.Aggregate;
+import nl.agentsatwork.aggregates.IndependentLocation;
+import nl.agentsatwork.aggregates.Location;
 
-public class AbstractIndependentAttribute extends AbstractImmutableAttribute {
+abstract public class AbstractIndependentAttribute extends AbstractAttribute {
 
-	private Entity entity;
+	final private Location location;
 
-	public AbstractIndependentAttribute(String key) {
-		super(key);
-		entity = defaultEntity;
+	private abstract class AttributeAggregate implements Aggregate {
+		abstract public String getKey();
 	}
+	
+	public AbstractIndependentAttribute(final String key) {
+		location = new IndependentLocation();
+		location.setAggregate(new AttributeAggregate() {
 
-	final public Entity getSuperior() {
-		return entity;
-	}
-
-	final public void setEntity(Entity superior) {
-		if (superior == null) {
-			if (this.entity != null && this.entity.unregister(this)) {
-				this.entity = null;
+			public int enter(Object entity) {
+				return -1;
 			}
-		} else {
-			if (superior.register(this)) {
-				this.entity = superior;
+
+			public boolean leave(int position) {
+				return false;
 			}
-		}
+
+			@Override
+			public String getKey() {
+				return key;
+			}
+			
+		});
 	}
+
+	public Aggregate getAggregate() {
+		return location.getAggregate();
+	}
+
+	public int getPosition() {
+		return location.getPosition();
+	}
+
+	public void setAggregate(Aggregate aggregate) {
+		location.setAggregate(aggregate);
+	}
+
+	public void setPosition(int position) {
+		location.setPosition(position);
+	}
+
 }

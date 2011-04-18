@@ -9,9 +9,6 @@ import static org.junit.Assert.fail;
 
 import java.util.Set;
 
-import nl.agentsatwork.attribute.ImmutableAttribute;
-import nl.agentsatwork.attribute.MutableAttribute;
-
 import org.junit.Before;
 import org.junit.Test;
 

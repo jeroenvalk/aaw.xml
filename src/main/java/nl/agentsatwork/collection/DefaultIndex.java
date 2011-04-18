@@ -1,11 +1,12 @@
 package nl.agentsatwork.collection;
 
-public class DefaultIndex<A> extends AbstractHashIndex<A> implements Index<A> {
+
+abstract public class DefaultIndex extends AbstractHashIndex implements Index {
 
 	final private int bits;
 	private int offset = 0, limit = 0, size = 0;
 	private int[] sizes = null;
-	private A[][] values = null;
+	private Object[][] values = null;
 
 	public DefaultIndex(int bits) {
 		this.bits = bits;
@@ -15,7 +16,7 @@ public class DefaultIndex<A> extends AbstractHashIndex<A> implements Index<A> {
 	@SuppressWarnings("unchecked")
 	private void realloc() {
 		if (values == null) {
-			values = (A[][]) new Object[1][];
+			values = (Object[][]) new Object[1][];
 			sizes = new int[1];
 		} else {
 			int newSize = values.length << 1;
@@ -25,13 +26,13 @@ public class DefaultIndex<A> extends AbstractHashIndex<A> implements Index<A> {
 				aux[i] = values[i];
 				aux1[i] = sizes[i];
 			}
-			values = (A[][]) aux;
+			values = (Object[][]) aux;
 			sizes = aux1;
 		}
 	}
 
 	@SuppressWarnings("unchecked")
-	public void autonumerical(A value) {
+	public int autonumerical(Object value) {
 		int n = limit++ - offset;
 		if (n == (values.length << bits)) {
 			realloc();
@@ -41,15 +42,16 @@ public class DefaultIndex<A> extends AbstractHashIndex<A> implements Index<A> {
 		int i = n >> bits;
 		int j = n & (--increment);
 		if (values[i] == null) {
-			values[i] = (A[]) new Object[++increment];
+			values[i] = (Object[]) new Object[++increment];
 			sizes[i] = 0;
 		}
 		values[i][j] = value;
 		++sizes[i];
 		++size;
+		return n;
 	}
 
-	public A valueOf(int index) {
+	public Object valueOf(int index) {
 		// TODO Auto-generated method stub
 		return null;
 	}

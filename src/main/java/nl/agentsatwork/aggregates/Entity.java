@@ -2,9 +2,7 @@ package nl.agentsatwork.aggregates;
 
 public interface Entity {
 
-	Aggregate getAggregate();
-
-	int getPosition();
+	Location getLocation();
 	
 	int enter(Aggregate aggregate);
 	

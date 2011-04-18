@@ -2,9 +2,8 @@ package nl.agentsatwork.collection;
 
 import java.util.Collection;
 import java.util.Iterator;
-import java.util.Set;
 
-abstract public class AbstractImmutableCollection<A> extends AbstractCollection<A> implements Set<A> {
+abstract public class AbstractImmutableCollection<A> extends AbstractCollection<A> {
 
 	public boolean add(A e) {
 		throw new UnsupportedOperationException();
@@ -19,10 +18,10 @@ abstract public class AbstractImmutableCollection<A> extends AbstractCollection<
 	}
 
 	public Iterator<A> iterator() {
-		final Index<A> index = getIndex();
+		final Index index = getIndex();
 		return new AbstractImmutableIterator<A>() {
 
-			protected Index<A> getIndex() {
+			protected Index getIndex() {
 				return index;
 			}
 

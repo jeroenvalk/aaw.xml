@@ -3,12 +3,12 @@ package nl.agentsatwork.collection;
 import java.util.HashMap;
 import java.util.Map;
 
-abstract public class AbstractIndex<A> implements Index<A> {
+abstract public class AbstractHashIndex extends AbstractIndex implements Index {
 
 	private int processed = 0;
-	private Map<A, Integer> index = new HashMap<A, Integer>();
+	private Map<Object, Integer> index = new HashMap<Object, Integer>();
 
-	public int indexOf(A value) {
+	public int indexOf(Object value) {
 		int i, offset = offset();
 		if (processed <= offset) {
 			processed = offset;
@@ -16,7 +16,7 @@ abstract public class AbstractIndex<A> implements Index<A> {
 		}
 		if (index.containsKey(value)) {
 			i = index.get(value);
-			A result = valueOf(i);
+			Object result = valueOf(i);
 			if (result != null) {
 				return i;
 			}
@@ -25,7 +25,7 @@ abstract public class AbstractIndex<A> implements Index<A> {
 		}
 		int n = limit();
 		for (int j = i; j < n; ++j) {
-			A result = valueOf(i);
+			Object result = valueOf(i);
 			if (result != null) {
 				index.put(result, j);
 				if (value.equals(result)) {

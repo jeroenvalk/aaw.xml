@@ -1,19 +1,19 @@
 package nl.agentsatwork.collection;
 
-public interface Index<A> {
+public interface Index {
 
-	void autonumerical(A value);
-	
+	int enter(Object value);
+
 	int offset();
-	
+
 	int limit();
-	
-	int indexOf(A value);
-	
-	A valueOf(int index);
-	
-	void remove(int index);
-	
+
+	int indexOf(Object value);
+
+	Object valueOf(int index);
+
+	boolean leave(int index);
+
 	int size();
-	
+
 }

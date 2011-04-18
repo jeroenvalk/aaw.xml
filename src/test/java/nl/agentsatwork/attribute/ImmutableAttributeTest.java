@@ -2,7 +2,6 @@ package nl.agentsatwork.attribute;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.fail;
-import nl.agentsatwork.attributes.Entity;
 
 import org.junit.Before;
 import org.junit.Test;

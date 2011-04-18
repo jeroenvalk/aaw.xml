@@ -1,10 +1,10 @@
 package nl.agentsatwork.attribute;
 
-import static org.junit.Assert.*;
-
-import java.util.Set;
-
-import nl.agentsatwork.attributes.Entity;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNotSame;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertSame;
+import static org.junit.Assert.assertTrue;
 
 import org.junit.Before;
 import org.junit.Test;

@@ -8,10 +8,10 @@ abstract public class AbstractSet<A> extends AbstractCollection<A> implements Se
 		if (e == null) {
 			throw new NullPointerException();
 		}
-		Index<A> index = getIndex();
+		Index index = getIndex();
 		int i = index.indexOf(e);
 		if (i < 0) {
-			index.autonumerical(e);
+			index.enter(e);
 			return true;
 		} else {
 			return false;

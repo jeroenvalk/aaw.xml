@@ -9,7 +9,7 @@ abstract public class AbstractAggregate extends AbstractEntity implements
 
 	final protected int entering(AbstractEntity entity) {
 		assert entity != null;
-		Aggregate aggregate = entity.getAggregate();
+		Aggregate aggregate = entity.getLocation().getAggregate();
 		assert aggregate != this;
 		AggregateIndex index = getIndex();
 		int i = index.autonumerical(entity);
@@ -24,7 +24,7 @@ abstract public class AbstractAggregate extends AbstractEntity implements
 	}
 
 	final protected boolean leaving(AbstractEntity entity, int position) {
-		assert entity.getAggregate() == this;
+		assert entity.getLocation().getAggregate() == this;
 		AggregateIndex index = getIndex();
 		if (position < 0) {
 			position = index.indexOf(entity);

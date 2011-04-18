@@ -6,10 +6,10 @@ abstract public class AbstractImmutableIterator<A> implements Iterator<A> {
 
 	protected int i = getIndex().offset();
 
-	abstract protected Index<A> getIndex();
+	abstract protected Index getIndex();
 	
 	public boolean hasNext() {
-		Index<A> index = getIndex();
+		Index index = getIndex();
 		int n = index.limit();
 		if (n > i) {
 			while (index.valueOf(i) == null && ++i < n)
@@ -20,15 +20,16 @@ abstract public class AbstractImmutableIterator<A> implements Iterator<A> {
 		}
 	}
 
+	@SuppressWarnings("unchecked")
 	public A next() {
-		Index<A> index = getIndex();
+		Index index = getIndex();
 		int n = index.limit();
 		if (n > i) {
 			while (index.valueOf(i) == null && ++i < n)
 				;
 			if (i < n) {
 				assert index.valueOf(i) != null;
-				return index.valueOf(i++);
+				return (A) index.valueOf(i++);
 			} else {
 				return null;
 			}

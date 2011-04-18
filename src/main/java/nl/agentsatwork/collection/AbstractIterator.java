@@ -6,10 +6,11 @@ abstract public class AbstractIterator<A> extends AbstractImmutableIterator<A> i
 
 	private int current = -1;
 
-	abstract protected Index<A> getIndex();
+	abstract protected Index getIndex();
 	
+	@SuppressWarnings("unchecked")
 	public A next() {
-		Index<A> index = getIndex();
+		Index index = getIndex();
 		int n = index.limit();
 		if (n > i) {
 			while (index.valueOf(i) == null && ++i < n)
@@ -17,7 +18,7 @@ abstract public class AbstractIterator<A> extends AbstractImmutableIterator<A> i
 			if (i < n) {
 				assert index.valueOf(i) != null;
 				current = i;
-				return index.valueOf(i++);
+				return (A) index.valueOf(i++);
 			} else {
 				return null;
 			}
@@ -30,7 +31,7 @@ abstract public class AbstractIterator<A> extends AbstractImmutableIterator<A> i
 		if (current < 0) {
 			throw new IllegalStateException();
 		} else {
-			getIndex().remove(current);
+			getIndex().leave(current);
 		}
 	}
 	

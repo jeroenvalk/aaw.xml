@@ -4,20 +4,23 @@ import java.util.Collection;
 import java.util.Map;
 import java.util.Set;
 
+import nl.agentsatwork.aggregates.Location;
+
 abstract public class AbstractMap<A, B> implements Map<A, B> {
 
 	abstract protected Entry<A, B> newEntry(A key, B value);
 
-	abstract protected int indexOfKey(A key);
+	abstract protected int indexOfKey(Object key);
 
-	abstract protected Index<? extends Entry<A,B>> getIndex();
+	abstract protected Index getIndex();
 	
 	protected int[] indicesOfValue(B value) {
-		Index<? extends Entry<A,B>> index = getIndex();
+		Index index = getIndex();
 		int[] aux = new int[size() + 1];
 		int j = 1, n = index.limit();
 		for (int i = index.offset(); i < n; ++i) {
-			B value2 = index.valueOf(i).getValue();
+			@SuppressWarnings("unchecked")
+			Object value2 = ((Entry<String,String>) index.valueOf(i)).getValue();
 			if (value == value2) {
 				aux[0] = i;
 				aux[j++] = i;
@@ -35,10 +38,10 @@ abstract public class AbstractMap<A, B> implements Map<A, B> {
 	}
 
 	public void clear() {
-		Index<? extends Entry<A,B>> index = getIndex();
+		Index index = getIndex();
 		int n = index.limit();
 		for (int i = 0; i < n; ++i) {
-			index.remove(i);
+			index.leave(i);
 		}
 	}
 
@@ -69,28 +72,27 @@ abstract public class AbstractMap<A, B> implements Map<A, B> {
 	}
 
 	public Set<Entry<A, B>> entrySet() {
-		final Index<? extends Entry<A,B>> index = getIndex();
+		final Index index = getIndex();
 		return new AbstractSet<Entry<A, B>>() {
 
-			@SuppressWarnings("unchecked")
-			protected Index<Entry<A, B>> getIndex() {
-				return (Index<Entry<A, B>>) index;
+			protected Index getIndex() {
+				return index;
 			}
 
 		};
 	}
 
+	@SuppressWarnings("unchecked")
 	public B get(Object key) {
 		if (key == null) {
 			throw new NullPointerException();
 		}
 		try {
-			@SuppressWarnings("unchecked")
-			int index = indexOfKey((A) key);
+			int index = indexOfKey(key);
 			if (index < 0) {
 				return null;
 			}
-			return getIndex().valueOf(index).getValue();
+			return ((Entry<A, B>) getIndex().valueOf(index)).getValue();
 		} catch (ClassCastException e) {
 			return null;
 		}
@@ -101,10 +103,10 @@ abstract public class AbstractMap<A, B> implements Map<A, B> {
 	}
 
 	public Set<A> keySet() {
-		final Index<? extends Entry<A,B>> self = getIndex();
-		final Index<A> index = new Index<A>() {
+		final Index self = getIndex();
+		final Index index = new Index() {
 
-			public void autonumerical(A value) {
+			public int enter(Object value) {
 				throw new UnsupportedOperationException();
 			}
 
@@ -116,16 +118,17 @@ abstract public class AbstractMap<A, B> implements Map<A, B> {
 				return self.limit();
 			}
 
-			public int indexOf(A value) {
+			public int indexOf(Object value) {
 				return indexOfKey(value);
 			}
 
+			@SuppressWarnings("unchecked")
 			public A valueOf(int index) {
-				return self.valueOf(index).getKey();
+				return ((Entry<A, B>) self.valueOf(index)).getKey();
 			}
 
-			public void remove(int index) {
-				self.remove(index);
+			public boolean leave(int index) {
+				return self.leave(index);
 			}
 
 			public int size() {
@@ -135,25 +138,25 @@ abstract public class AbstractMap<A, B> implements Map<A, B> {
 		};
 		return new AbstractSet<A>() {
 
-			protected Index<A> getIndex() {
+			protected Index getIndex() {
 				return index;
 			}
 			
 		};
 	}
 
+	@SuppressWarnings("unchecked")
 	public B put(A key, B value) {
 		if (key == null || value == null) {
 			throw new NullPointerException();
 		}
-		@SuppressWarnings("unchecked")
-		Index<Entry<A,B>> index = (Index<Entry<A, B>>) getIndex();
+		Index index = getIndex();
 		int i = indexOfKey(key);
 		if (i < 0) {
-			index.autonumerical(newEntry(key, value));
+			index.enter(newEntry(key, value));
 			return null;
 		} else {
-			return index.valueOf(i).setValue(value);
+			return ((Entry<A, B>) index.valueOf(i)).setValue(value);
 		}
 	}
 
@@ -168,13 +171,13 @@ abstract public class AbstractMap<A, B> implements Map<A, B> {
 			throw new NullPointerException();
 		}
 		try {
-			@SuppressWarnings("unchecked")
-			int index = indexOfKey((A) key);
+			int index = indexOfKey(key);
 			if (index < 0) {
 				return null;
 			}
-			B result = getIndex().valueOf(index).getValue();
-			getIndex().remove(index);
+			@SuppressWarnings("unchecked")
+			B result = ((Entry<A, B>) getIndex().valueOf(index)).getValue();
+			getIndex().leave(index);
 			return result;
 		} catch (ClassCastException e) {
 			return null;
@@ -182,10 +185,10 @@ abstract public class AbstractMap<A, B> implements Map<A, B> {
 	}
 
 	public Collection<B> values() {
-		final Index<? extends Entry<A,B>> self = getIndex();
-		final Index<B> index = new AbstractHashIndex<B>() {
+		final Index self = getIndex();
+		final Index index = new AbstractHashIndex() {
 
-			public void autonumerical(B value) {
+			public int autonumerical(Object value) {
 				throw new UnsupportedOperationException();
 			}
 
@@ -197,22 +200,27 @@ abstract public class AbstractMap<A, B> implements Map<A, B> {
 				return self.limit();
 			}
 
+			@SuppressWarnings("unchecked")
 			public B valueOf(int index) {
-				return self.valueOf(index).getValue();
+				return ((Entry<A, B>) self.valueOf(index)).getValue();
 			}
 
 			public void remove(int index) {
-				self.remove(index);
+				self.leave(index);
 			}
 
 			public int size() {
 				return self.size();
 			}
-			
+
+			public Location getLocation() {
+				return null;
+			}
+
 		};
 		return new AbstractCollection<B>() {
 
-			protected Index<B> getIndex() {
+			protected Index getIndex() {
 				return index;
 			}
 			
