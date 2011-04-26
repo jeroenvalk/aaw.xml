@@ -4,6 +4,7 @@ import java.util.Collection;
 import java.util.Map;
 import java.util.Set;
 
+import nl.agentsatwork.aggregates.Index;
 import nl.agentsatwork.aggregates.Location;
 
 abstract public class AbstractMap<A, B> implements Map<A, B> {

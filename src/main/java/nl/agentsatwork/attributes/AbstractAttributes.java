@@ -2,11 +2,11 @@ package nl.agentsatwork.attributes;
 
 import java.util.Map;
 
+import nl.agentsatwork.aggregates.AbstractIndex;
 import nl.agentsatwork.aggregates.Entity;
+import nl.agentsatwork.aggregates.Index;
 import nl.agentsatwork.attribute.Attribute;
-import nl.agentsatwork.collection.AbstractIndex;
 import nl.agentsatwork.collection.AbstractMap;
-import nl.agentsatwork.collection.Index;
 
 abstract public class AbstractAttributes extends AbstractIndex implements Attributes {
 

@@ -1,6 +1,6 @@
 package nl.agentsatwork.elements;
 
-import nl.agentsatwork.collection.Index;
+import nl.agentsatwork.aggregates.Index;
 import nl.agentsatwork.collection.Tuple;
 import nl.agentsatwork.element.Element;
 

@@ -2,6 +2,8 @@ package nl.agentsatwork.collection;
 
 import java.util.Set;
 
+import nl.agentsatwork.aggregates.Index;
+
 abstract public class AbstractSet<A> extends AbstractCollection<A> implements Set<A> {
 
 	public boolean add(A e) {

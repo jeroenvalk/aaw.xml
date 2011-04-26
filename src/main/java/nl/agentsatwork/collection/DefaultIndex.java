@@ -1,5 +1,7 @@
 package nl.agentsatwork.collection;
 
+import nl.agentsatwork.aggregates.Index;
+
 
 abstract public class DefaultIndex extends AbstractHashIndex implements Index {
 

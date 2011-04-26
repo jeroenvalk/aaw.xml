@@ -3,6 +3,8 @@ package nl.agentsatwork.collection;
 import java.util.Collection;
 import java.util.Iterator;
 
+import nl.agentsatwork.aggregates.Index;
+
 abstract public class AbstractImmutableCollection<A> extends AbstractCollection<A> {
 
 	public boolean add(A e) {

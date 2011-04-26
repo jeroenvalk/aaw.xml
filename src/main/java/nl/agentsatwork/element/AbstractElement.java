@@ -1,10 +1,10 @@
 package nl.agentsatwork.element;
 
+import nl.agentsatwork.aggregates.Index;
 import nl.agentsatwork.aggregates.Location;
 import nl.agentsatwork.antlr.XPath;
 import nl.agentsatwork.attribute.Attribute;
 import nl.agentsatwork.attributes.AbstractAttributes;
-import nl.agentsatwork.collection.Index;
 import nl.agentsatwork.collection.Tuple;
 import nl.agentsatwork.elements.Elements;
 

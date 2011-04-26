@@ -36,8 +36,7 @@ public class XMLTest {
 	public void testXML() {
 		Tag example = new XML<Example,Example>() {
 
-			@Override
-			public void refresh(Example y) {
+			Index content(Example y) {
 				_ = this.singleton(y);
 			}
 

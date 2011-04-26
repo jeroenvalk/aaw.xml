@@ -1,6 +1,5 @@
-package nl.agentsatwork.collection;
+package nl.agentsatwork.aggregates;
 
-import nl.agentsatwork.aggregates.AbstractAggregate;
 
 abstract public class AbstractIndex extends AbstractAggregate implements AggregateIndex {
 

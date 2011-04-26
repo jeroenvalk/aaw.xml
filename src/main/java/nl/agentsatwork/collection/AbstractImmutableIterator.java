@@ -2,6 +2,8 @@ package nl.agentsatwork.collection;
 
 import java.util.Iterator;
 
+import nl.agentsatwork.aggregates.Index;
+
 abstract public class AbstractImmutableIterator<A> implements Iterator<A> {
 
 	protected int i = getIndex().offset();

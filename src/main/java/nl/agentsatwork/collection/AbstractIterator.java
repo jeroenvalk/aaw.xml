@@ -2,6 +2,8 @@ package nl.agentsatwork.collection;
 
 import java.util.Iterator;
 
+import nl.agentsatwork.aggregates.Index;
+
 abstract public class AbstractIterator<A> extends AbstractImmutableIterator<A> implements Iterator<A> {
 
 	private int current = -1;

@@ -1,6 +1,5 @@
-package nl.agentsatwork.collection;
+package nl.agentsatwork.aggregates;
 
-import nl.agentsatwork.aggregates.Aggregate;
 
 public interface AggregateIndex extends Aggregate, Index {
 
