@@ -3,10 +3,10 @@ package nl.agentsatwork.collection;
 import java.util.HashMap;
 import java.util.Map;
 
-import nl.agentsatwork.aggregates.AbstractIndex;
+import nl.agentsatwork.aggregates.AbstractAggregateIndex;
 import nl.agentsatwork.aggregates.Index;
 
-abstract public class AbstractHashIndex extends AbstractIndex implements Index {
+abstract public class AbstractHashIndex extends AbstractAggregateIndex implements Index {
 
 	private int processed = 0;
 	private Map<Object, Integer> index = new HashMap<Object, Integer>();

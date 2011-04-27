@@ -2,13 +2,13 @@ package nl.agentsatwork.attributes;
 
 import java.util.Map;
 
-import nl.agentsatwork.aggregates.AbstractIndex;
+import nl.agentsatwork.aggregates.AbstractAggregateIndex;
 import nl.agentsatwork.aggregates.Entity;
 import nl.agentsatwork.aggregates.Index;
 import nl.agentsatwork.attribute.Attribute;
 import nl.agentsatwork.collection.AbstractMap;
 
-abstract public class AbstractAttributes extends AbstractIndex implements Attributes {
+abstract public class AbstractAttributes extends AbstractAggregateIndex implements Attributes {
 
 	protected Attribute[] attr;
 
