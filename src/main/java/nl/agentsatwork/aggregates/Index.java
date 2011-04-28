@@ -1,4 +1,4 @@
-package nl.agentsatwork.collection;
+package nl.agentsatwork.aggregates;
 
 public interface Index {
 
