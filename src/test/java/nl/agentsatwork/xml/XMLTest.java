@@ -1,6 +1,5 @@
 package nl.agentsatwork.xml;
 
-import nl.agentsatwork.elements.Elements;
 
 
 public class XMLTest {
