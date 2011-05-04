@@ -134,6 +134,10 @@ public class AbstractComposite<A> implements Composite<A> {
 			public int indexOf(Object value) {
 				throw new UnsupportedOperationException();
 			}
+
+			public Location getLocation() {
+				return null;
+			}
 		};
 	}
 }

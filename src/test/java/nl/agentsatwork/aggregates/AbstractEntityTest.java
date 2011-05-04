@@ -25,21 +25,14 @@ public class AbstractEntityTest {
 
 		};
 
-		aggregate = new AbstractAggregate() {
-			final private AggregateIndex index = new AbstractAggregateIndex() {
-
-				public int indexOf(Object value) {
-					throw new UnsupportedOperationException();
-				}
-
-			};
+		aggregate = new AbstractAggregateIndex() {
 
 			public Location getLocation() {
 				return null;
 			}
 
-			public AggregateIndex getIndex() {
-				return index;
+			public int indexOf(Object value) {
+				throw new UnsupportedOperationException();
 			}
 
 		};
