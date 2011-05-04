@@ -1,7 +1,7 @@
 package nl.agentsatwork.aggregates;
 
 
-public interface AggregateIndex extends Index {
+public interface AggregateIndex extends Aggregate, Index {
 
 	int autonumerical(Object value);
 
