@@ -11,8 +11,8 @@ import org.junit.Test;
 
 public class AbstractEntityTest {
 
-	private Entity entity = null;
-	private Aggregate aggregate = null;
+	protected Entity entity = null;
+	protected Aggregate aggregate = null;
 
 	@Before
 	public void setUp() {
