@@ -1,5 +1,7 @@
 package nl.agentsatwork.xml;
 
+import nl.agentsatwork.aggregates.Index;
+
 
 
 public class XMLTest {
@@ -37,6 +39,7 @@ public class XMLTest {
 
 			Index content(Example y) {
 				_ = this.singleton(y);
+				return null;
 			}
 
 			Tag properties = new XML<Example,Properties>() {
@@ -55,6 +58,12 @@ public class XMLTest {
 					
 				};
 			};
+
+			@Override
+			public void refresh(Example y) {
+				// TODO Auto-generated method stub
+				
+			}
 			
 		};
 	}
