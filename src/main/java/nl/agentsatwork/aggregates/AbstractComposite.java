@@ -21,7 +21,7 @@ public class AbstractComposite<A> implements Composite<A> {
 
 	@SuppressWarnings("unchecked")
 	public int k(int i, int j) {
-		return ((Entry<Object,Integer>) entries.get(i).valueOf(j)).getValue();
+		return ((Entry<Object, Integer>) entries.get(i).valueOf(j)).getValue();
 	}
 
 	public Index getIndex(int i) {
@@ -34,18 +34,18 @@ public class AbstractComposite<A> implements Composite<A> {
 	}
 
 	public int size() {
-		assert i.size()==j.size();
+		assert i.size() == j.size();
 		return i.size();
 	}
 
 	public void resize(int size) {
 		int n = entries.size();
 		if (size < n) {
-			for (int i=--n; i<=size; --i) {
+			for (int i = --n; i <= size; --i) {
 				entries.remove(i);
 			}
 		} else {
-			for (int i = n; i<size; ++i) {
+			for (int i = n; i < size; ++i) {
 				addIndex();
 			}
 		}
@@ -53,17 +53,17 @@ public class AbstractComposite<A> implements Composite<A> {
 
 	private void addIndex() {
 		final int i1 = entries.size();
-		assert indices.size()==i1;
+		assert indices.size() == i1;
 		final Index index1 = newIndex();
 		Index index2 = new Index() {
 
 			public int enter(final Object value) {
 				final int k = i.size();
-				assert j.size()==k;
-				Entry<Object,Integer> entry = new Entry<Object,Integer>() {
+				assert j.size() == k;
+				Entry<Object, Integer> entry = new Entry<Object, Integer>() {
 
 					private int k = i.size();
-					
+
 					public Object getKey() {
 						return value;
 					}
@@ -77,7 +77,7 @@ public class AbstractComposite<A> implements Composite<A> {
 						k = value;
 						return result;
 					}
-					
+
 				};
 				i.add(i1);
 				final int j1 = index1.enter(entry);
@@ -94,31 +94,46 @@ public class AbstractComposite<A> implements Composite<A> {
 			}
 
 			public int indexOf(Object value) {
-				// TODO Auto-generated method stub
-				return 0;
+				throw new UnsupportedOperationException();
 			}
 
 			@SuppressWarnings("unchecked")
 			public Object valueOf(int index) {
-				return ((Entry<Integer,Object>) index1.valueOf(index)).getValue();
+				return ((Entry<Integer, Object>) index1.valueOf(index))
+						.getValue();
 			}
 
+			@SuppressWarnings("unchecked")
 			public boolean leave(int index) {
-				// TODO Auto-generated method stub
-				return false;
+				Entry<Object, Integer> entry = (Entry<Object, Integer>) valueOf(index);
+				int pos = entry.getValue();
+				int last = i.size();
+				assert pos >= 0 && pos < last;
+				assert j.size() == last;
+				int i1 = i.remove(--last);
+				int j1 = j.remove(last);
+				entry = (Entry<Object, Integer>) entries.get(i1).valueOf(j1);
+				assert entry.getValue() == last;
+				entry.setValue(pos);
+				i.set(pos, i1);
+				j.set(pos, j1);
+				return index1.leave(index);
 			}
 
 			public int size() {
 				return index1.size();
 			}
-			
+
 		};
 		entries.add(index1);
 		indices.add(index2);
 	}
 
 	private Index newIndex() {
-		// TODO Auto-generated method stub
-		return null;
+		return new AbstractIndex() {
+			public int indexOf(Object value) {
+				throw new UnsupportedOperationException();
+			}
+		};
 	}
 }

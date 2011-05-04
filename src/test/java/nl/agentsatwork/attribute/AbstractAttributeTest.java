@@ -5,6 +5,8 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertSame;
 
+import nl.agentsatwork.aggregates.Location;
+
 import org.apache.log4j.Logger;
 import org.junit.Before;
 import org.junit.Test;
@@ -15,7 +17,17 @@ public class AbstractAttributeTest {
 
 	@Before
 	public void setUp() {
-		attribute = new AbstractImmutableAttribute("test");
+		attribute = new AbstractImmutableAttribute() {
+
+			public String defaultValue() {
+				return null;
+			}
+
+			public Location getLocation() {
+				return null;
+			}
+			
+		};
 	}
 
 	@Test
