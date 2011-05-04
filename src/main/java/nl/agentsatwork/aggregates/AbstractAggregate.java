@@ -4,8 +4,6 @@ package nl.agentsatwork.aggregates;
 abstract public class AbstractAggregate extends AbstractEntity implements
 		Aggregate {
 
-	abstract protected AggregateIndex getIndex();
-
 	final protected int entering(AbstractEntity entity) {
 		assert entity != null;
 		Aggregate aggregate = entity.getLocation().getAggregate();
