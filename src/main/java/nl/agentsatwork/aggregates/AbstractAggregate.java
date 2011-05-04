@@ -35,7 +35,7 @@ abstract public class AbstractAggregate extends AbstractEntity implements
 		return true;
 	}
 
-	final public int enter(Object value) {
+	public int enter(Object value) {
 		if (value instanceof Entity) {
 			return ((Entity) value).enter(this);
 		} else {
@@ -49,7 +49,7 @@ abstract public class AbstractAggregate extends AbstractEntity implements
 		}
 	}
 
-	final public boolean leave(int position) {
+	public boolean leave(int position) {
 		AggregateIndex index = getIndex();
 		Object value = index.valueOf(position);
 		if (value instanceof Entity) {
