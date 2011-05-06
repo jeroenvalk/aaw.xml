@@ -6,7 +6,7 @@ import org.junit.Test;
 
 public class IndependentLocationTest {
 
-	private Location location = null;
+	protected Location location = null;
 	private Aggregate aggregate = new AbstractAggregate() {
 
 		public AggregateIndex getIndex() {
