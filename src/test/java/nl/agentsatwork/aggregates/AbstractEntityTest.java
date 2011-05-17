@@ -32,7 +32,15 @@ public class AbstractEntityTest {
 			}
 
 			public int indexOf(Object value) {
-				throw new UnsupportedOperationException();
+				if (value == null) {
+					throw new IllegalArgumentException();
+				}
+				for (int i = offset(); i < limit(); ++i) {
+					if (value.equals(valueOf(i))) {
+						return i;
+					}
+				}
+				return -1;
 			}
 
 		};
@@ -85,13 +93,26 @@ public class AbstractEntityTest {
 				return null;
 			}
 
+			public Location getLocation() {
+				return null;
+			}
+
+			public int enter(Aggregate aggregate) {
+				return -1;
+			}
+
+			public boolean leave(Aggregate aggregate) {
+				return true;
+			}
+
 		};
 
 		assertEquals(3, entity.enter(aggregate));
 		assertSame(aggregate, entity.getLocation().getAggregate());
 		assertEquals(3, entity.getLocation().getPosition());
 
-		assertEquals(0, this.aggregate.getIndex().size());
+		assertEquals(1, this.aggregate.getIndex().size());
+		assertSame(entity, this.aggregate.valueOf(0));
 
 		assertEquals(-1, entity.enter(this.aggregate));
 		assertSame(aggregate, entity.getLocation().getAggregate());

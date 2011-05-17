@@ -44,12 +44,8 @@ public class AbstractAggregateIndexTest extends AbstractAggregateTest {
 	public void testValueOf() {
 		AggregateIndex index = (AggregateIndex) aggregate;
 		Integer a = 0, b = 1;
-		try {
-			index.valueOf(-1);
-			fail("position must be positive");
-		} catch(IllegalArgumentException e) {
-			
-		}
+		assertNull(index.valueOf(-1));
+		assertNull(index.valueOf(-2));
 		assertEquals(0, index.autonumerical(a));
 		assertEquals(1, index.autonumerical(b));
 		assertSame(a, index.valueOf(0));
@@ -75,7 +71,10 @@ public class AbstractAggregateIndexTest extends AbstractAggregateTest {
 	@Test
 	public void testAutonumerical() {
 		AggregateIndex index = (AggregateIndex) aggregate;
-		assertEquals(0, index.autonumerical(0));
+		assertEquals(0, index.autonumerical(null));
+		assertEquals(1, index.offset());
+		assertEquals(1, index.limit());
+		
 		assertEquals(1, index.autonumerical(1));
 		assertEquals(2, index.autonumerical(2));
 		assertEquals(3, index.autonumerical(3));
@@ -90,6 +89,8 @@ public class AbstractAggregateIndexTest extends AbstractAggregateTest {
 		assertNotNull(index.valueOf(0));
 		index.remove(0);
 		assertNull(index.valueOf(0));
+		assertEquals(1, index.offset());
+		assertEquals(1, index.limit());
 	}
 
 }

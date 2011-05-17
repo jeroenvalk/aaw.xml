@@ -1,6 +1,6 @@
 package nl.agentsatwork.aggregates;
 
-public interface Aggregate {
+public interface Aggregate extends Entity {
 
 	AggregateIndex getIndex();
 

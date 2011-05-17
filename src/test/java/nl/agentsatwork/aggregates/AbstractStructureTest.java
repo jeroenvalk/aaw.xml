@@ -38,11 +38,7 @@ public class AbstractStructureTest {
 	public void test() {
 		final Structure root = new RootStructure(new Example[] { example });
 
-		final Structure properties = new AbstractStructure<Example>() {
-			public Structure getParent() {
-				return root;
-			}
-
+		final Structure properties = new AbstractStructure<Example>(root) {
 
 			@Override
 			protected Object getValue(Example value, int i) {
@@ -61,11 +57,7 @@ public class AbstractStructureTest {
 
 		};
 
-		Structure property = new AbstractStructure<Properties>() {
-
-			public Structure getParent() {
-				return properties;
-			}
+		Structure property = new AbstractStructure<Properties>(properties) {
 
 			@Override
 			protected Object getValue(Properties value, int i) {

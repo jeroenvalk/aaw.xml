@@ -6,8 +6,8 @@ import nl.agentsatwork.attribute.Attribute;
 
 abstract public class AbstractImmutableAttributes extends AbstractAttributes implements Attributes {
 
-	public AbstractImmutableAttributes(Attribute[] attribute) {
-		super(attribute);
+	public AbstractImmutableAttributes(Attribute[] attr) {
+		super(attr);
 	}
 
 	final public void set(String name, String value) {

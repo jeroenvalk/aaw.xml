@@ -21,6 +21,7 @@ abstract public class AbstractEntity implements Entity {
 		if (aggregate.leaving(this, location.getPosition())) {
 			assert location.getAggregate() == aggregate;
 			location.setAggregate(null);
+			location.setPosition(-1);
 			return true;
 		} else {
 			assert location.getAggregate() == aggregate;
@@ -39,7 +40,12 @@ abstract public class AbstractEntity implements Entity {
 			if (aggregate instanceof AbstractAggregate) {
 				return entering((AbstractAggregate) aggregate);
 			} else {
-				return aggregate.enter(this);
+				int i = aggregate.enter(this);
+				if (i >= 0) {
+					location.setAggregate(aggregate);
+					location.setPosition(i);
+				}
+				return i;
 			}
 		}
 	}

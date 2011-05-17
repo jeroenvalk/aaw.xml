@@ -14,24 +14,20 @@ public class AbstractAggregateTest extends AbstractEntityTest {
 		} catch (IllegalArgumentException e) {
 
 		}
-		
+
 		assertEquals(0, aggregate.enter("test"));
 		assertEquals(1, aggregate.enter(entity));
 	}
 
 	@Test
 	public void testLeaveInt() {
-		try {
-			aggregate.leave(-1);
-			fail("position must be positive");
-		} catch(IllegalArgumentException e) {
-			
-		}
-		
+		assertTrue(aggregate.leave(-1));
+		assertTrue(aggregate.leave(-2));
+
 		assertTrue(aggregate.leave(0));
 		assertEquals(0, aggregate.enter(entity));
 		assertTrue(aggregate.leave(0));
-		
+
 		Entity entity = new Entity() {
 
 			public Location getLocation() {
@@ -45,12 +41,12 @@ public class AbstractAggregateTest extends AbstractEntityTest {
 			public boolean leave(Aggregate aggregate) {
 				return false;
 			}
-			
+
 		};
-		
+
 		assertEquals(1, aggregate.enter(entity));
 		assertFalse(aggregate.leave(1));
-		
+
 	}
 
 }

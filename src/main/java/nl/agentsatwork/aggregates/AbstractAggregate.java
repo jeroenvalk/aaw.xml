@@ -12,7 +12,7 @@ abstract public class AbstractAggregate extends AbstractEntity implements
 		int i = index.autonumerical(entity);
 		if (i >= 0) {
 			assert index.valueOf(i) == entity;
-			if (!entity.leave(aggregate)) {
+			if (aggregate != null && !entity.leave(aggregate)) {
 				index.remove(i);
 				return -1;
 			}

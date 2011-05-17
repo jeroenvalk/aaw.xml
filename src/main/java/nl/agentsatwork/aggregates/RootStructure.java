@@ -69,15 +69,15 @@ public class RootStructure implements Structure {
 		return index.size();
 	}
 
-	public Structure getParent() {
-		return null;
-	}
-
 	public void refresh() {
 		
 	}
 
 	public void refresh(int i) {
 		
+	}
+
+	public AggregateIndex getAggregateIndex() {
+		return null;
 	}
 }

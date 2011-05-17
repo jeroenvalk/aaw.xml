@@ -2,7 +2,7 @@ package nl.agentsatwork.aggregates;
 
 public interface Structure extends Composite<Object> {
 
-	Structure getParent();
+	AggregateIndex getAggregateIndex();
 
 	void refresh();
 

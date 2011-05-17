@@ -3,6 +3,31 @@ package nl.agentsatwork.aggregates;
 abstract public class AbstractStructure<A> extends AbstractComposite<Object>
 		implements Structure {
 
+	final private AggregateIndex index;
+	
+	public AbstractStructure(Structure parent) {
+		index = new AbstractAggregateIndex() {
+
+			public Location getLocation() {
+				return new IndependentLocation();
+			}
+
+			public int indexOf(Object value) {
+				throw new UnsupportedOperationException();
+			}
+			
+		};
+		parent.getAggregateIndex().enter(this);
+	}
+	
+	public AggregateIndex getAggregateIndex() {
+		return index;
+	}
+	
+	private Structure getParent() {
+		return (Structure) getAggregateIndex().getLocation().getAggregate();
+	}
+	
 	public void refresh() {
 		// TODO Auto-generated method stub
 
